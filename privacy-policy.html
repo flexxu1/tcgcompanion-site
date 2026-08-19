@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TCGCompanion — Privacy Policy</title>
+    <meta name="description" content="Privacy policy for the TCGCompanion Chrome extension. Local-only: no server, no sync, no analytics.">
+    <!--
+      Self-contained on purpose: no external stylesheet, font or script. A privacy
+      policy that loads third-party assets is making a request on behalf of the
+      reader, which is exactly what this page claims the product does not do.
+
+      Placed in site/ rather than docs/ so GitHub Pages can serve ONLY this page.
+      docs/ holds internal release notes and the shippability audit, which should
+      not be published alongside it. site/ is also outside package-release.mjs
+      includeRoots, so it is not shipped inside the extension.
+    -->
+    <style>
+      :root {
+        --bg: #f5f5f7; --panel: #fff; --ink: #1d1d1f; --muted: #6e6e73;
+        --line: #d2d2d7; --accent: #0071e3;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; padding: 40px 20px 72px; background: var(--bg); color: var(--ink);
+        font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+              "Segoe UI", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      main { max-width: 720px; margin: 0 auto; }
+      header { margin-bottom: 32px; }
+      h1 { margin: 0 0 8px; font-size: 34px; letter-spacing: -.02em; }
+      .lede { margin: 0; color: var(--muted); }
+      .stamp { margin-top: 8px; font-size: 13px; color: var(--muted); }
+      section {
+        margin-bottom: 16px; padding: 24px 28px; background: var(--panel);
+        border: 1px solid var(--line); border-radius: 14px;
+      }
+      h2 { margin: 0 0 12px; font-size: 20px; }
+      p, li { color: #2b2b2e; }
+      p:last-child, ul:last-child { margin-bottom: 0; }
+      ul { padding-left: 20px; }
+      li { margin-bottom: 6px; }
+      code {
+        padding: 1px 5px; border-radius: 5px; background: #f0f0f3;
+        font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      strong { font-weight: 600; }
+      .callout { border-color: #a7d3a0; background: #f2faf1; }
+      footer { margin-top: 28px; color: var(--muted); font-size: 14px; text-align: center; }
+      a { color: var(--accent); }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #1c1c1e; --panel: #2c2c2e; --ink: #f5f5f7; --muted: #a1a1a6; --line: #3a3a3c; }
+        p, li { color: #e3e3e6; }
+        code { background: #3a3a3c; }
+        .callout { border-color: #2f5d2a; background: #24301f; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>TCGCompanion Privacy Policy</h1>
+        <p class="lede">
+          TCGCompanion is a local-only Chrome extension. It has no account, no
+          server, and no sync. Everything it records stays on your machine until
+          you delete it or export it yourself.
+        </p>
+        <p class="stamp">Last verified against the extension source: 15 August 2026.</p>
+      </header>
+
+      <section class="callout">
+        <h2>No network activity of its own</h2>
+        <p>
+          The shipped code contains no <code>fetch</code>, <code>XMLHttpRequest</code>,
+          <code>WebSocket</code> or <code>sendBeacon</code> call anywhere. There is no
+          external server, cloud sync, analytics, advertising, telemetry, or crash
+          reporting.
+        </p>
+        <p>
+          Prices are read from TCGplayer pages <strong>you already have open</strong> in
+          your own browser session. The extension never fetches TCGplayer pages by itself.
+        </p>
+      </section>
+
+      <section>
+        <h2>What is stored locally</h2>
+        <p>Everything below is kept in <code>chrome.storage.local</code> on your device.</p>
+        <p>For each card you save:</p>
+        <ul>
+          <li>Card identity: name, set, condition, printing, language, product and SKU ids.</li>
+          <li>Prices: current market and low price, plus a bounded history of samples,
+            each with a timestamp and the activity that produced it.</li>
+          <li><strong>URLs</strong>: the TCGplayer product or listing address the card came
+            from, and the card image address. Query strings and fragments are stripped
+            from the saved-origin URL before storing.</li>
+          <li><strong>Your own notes</strong>: free text you type on a card is kept as written.</li>
+          <li>Organisation: list membership, whether you marked it as a card you
+            already <strong>have</strong>, an optional cart price cap, when it was
+            saved, and where from — product page or listing page, which list you chose,
+            and the price at that moment.</li>
+        </ul>
+        <p>
+          Also stored: your list names, whether each list is a deck or a collection,
+          an optional per-list spend budget, and extension settings
+          (junk-term filter, seller preferences, price polling and retention, and whether
+          you accepted the cart risk notice).
+        </p>
+      </section>
+
+      <section>
+        <h2>Site access</h2>
+        <p>Host access is limited to <code>https://*.tcgplayer.com/*</code>, and is used to:</p>
+        <ul>
+          <li>Read visible page content to save card identity and visible pricing.</li>
+          <li>Filter visible listings by condition, and — only if you enable the junk listing filter — dim listings matching your junk terms.</li>
+          <li>Evaluate visible seller and listing text for local cart-matching decisions.</li>
+          <li>Capture price samples from TCGplayer tabs that are already open, and update
+            local price history for saved cards on those pages.</li>
+        </ul>
+        <p>
+          That access also lets the extension see <strong>which TCGplayer tabs you
+          currently have open</strong> — this is how “refresh from open tabs” finds pages
+          to read. It is used only to locate TCGplayer tabs. No browsing outside
+          tcgplayer.com is visible to it, and nothing about your tabs leaves your machine.
+        </p>
+        <p>
+          Permissions requested: <code>storage</code> and <code>unlimitedStorage</code> for
+          local shortlist data, and <code>alarms</code> to schedule the optional open-tab
+          price refresh, which is off by default.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cart assistance</h2>
+        <p>
+          Cart tools are <strong>off by default</strong> and stay off until you enable them
+          and accept an explicit risk notice.
+        </p>
+        <p>
+          When enabled, cart population uses your normal browser session and stops at
+          add-to-cart. It does not automate checkout, payment or account changes, and does
+          not spoof identity, solve CAPTCHAs, or bypass challenges. Automation is blocked
+          outright on cart, checkout, order, payment, account, login and challenge pages.
+        </p>
+        <p>
+          Using it may still breach TCGplayer’s Terms of Service. That is your decision,
+          which is why it is opt-in and gated behind the notice.
+        </p>
+      </section>
+
+      <section>
+        <h2>Backups and deletion</h2>
+        <p>
+          Export writes a JSON backup to a location you choose; import reads a file you
+          choose and merges it without deleting existing records. An exported backup
+          contains everything described above, including your notes and the stored URLs —
+          treat the file the way you would treat the shortlist itself.
+        </p>
+        <p>
+          Uninstalling the extension removes its local storage. Individual cards and lists
+          can be deleted from the dashboard at any time.
+        </p>
+      </section>
+
+      <footer>Support contact: see the Chrome Web Store listing.</footer>
+    </main>
+  </body>
+</html>
