@@ -14,6 +14,30 @@
       docs/ holds internal release notes and the shippability audit, which should
       not be published alongside it. site/ is also outside package-release.mjs
       includeRoots, so it is not shipped inside the extension.
+
+      COMPLIANCE NOTE (2026-08-19). Sections were added to meet specific published
+      requirements, not as boilerplate. Each is tied to its source:
+        * Limited Use disclosure      -> Chrome Web Store Program Policies (Limited Use).
+                                         CWS requires it on the homepage or one click away.
+        * Effective date              -> CalOPPA, Cal. Bus. & Prof. Code 22575(b)(4).
+        * Notice of changes           -> CalOPPA 22575(b)(3).
+        * Do Not Track response       -> CalOPPA 22575(b)(5), added by A.B. 370 (2014).
+        * Categories + third parties  -> CalOPPA 22575(b)(1).
+        * Children under 13           -> COPPA, 15 U.S.C. 6501-6506.
+        * Retention / security /      -> Chrome Web Store user-data guidance, which asks
+          access and deletion            policies to address these even when storage is local.
+
+      DELIBERATELY NOT CLAIMED: no CCPA/CPRA rights apparatus and no SHIELD Act
+      compliance statement. Neither applies here -- CCPA thresholds (25M USD revenue /
+      100k consumers / 50% of revenue from selling data) are not met by a free
+      extension from a sole developer, and NY GBL 899-bb is triggered by owning or
+      licensing "private information" of a NY resident, which the developer never
+      receives. Asserting compliance programs that do not exist is itself an FTC Act
+      Section 5 deception risk, so the page states the true position instead.
+
+      New York has NO comprehensive consumer privacy statute in force: the NY Privacy
+      Act (A00974, 2025-26) died in committee, and the NY Health Information Privacy
+      Act was vetoed 2025-12-19 (and covers health data, which this does not touch).
     -->
     <style>
       :root {
@@ -66,20 +90,42 @@
           server, and no sync. Everything it records stays on your machine until
           you delete it or export it yourself.
         </p>
-        <p class="stamp">Last verified against the extension source: 15 August 2026.</p>
+        <p class="stamp">
+          <strong>Effective date:</strong> 19 August 2026 · Applies to TCGCompanion
+          version 0.1.0 and later. Last verified against the extension source on
+          19 August 2026.
+        </p>
       </header>
 
       <section class="callout">
         <h2>No network activity of its own</h2>
         <p>
-          The shipped code contains no <code>fetch</code>, <code>XMLHttpRequest</code>,
-          <code>WebSocket</code> or <code>sendBeacon</code> call anywhere. There is no
-          external server, cloud sync, analytics, advertising, telemetry, or crash
-          reporting.
+          As of the effective date above, the shipped code contains no
+          <code>fetch</code>, <code>XMLHttpRequest</code>, <code>WebSocket</code> or
+          <code>sendBeacon</code> call anywhere. There is no external server, cloud
+          sync, analytics, advertising, telemetry, or crash reporting. If that ever
+          changes, this policy will be updated before the change ships — see
+          <em>Changes to this policy</em> below.
         </p>
         <p>
           Prices are read from TCGplayer pages <strong>you already have open</strong> in
           your own browser session. The extension never fetches TCGplayer pages by itself.
+        </p>
+      </section>
+
+      <section>
+        <h2>What the developer collects: nothing</h2>
+        <p>
+          The developer does not collect, receive, transmit, sell, rent, or share any
+          user data. There is no category of personal information gathered by the
+          developer, and there are <strong>no third parties</strong> with whom
+          information is shared, because no information ever leaves your device.
+        </p>
+        <p>
+          Everything described in the next section is stored by the extension
+          <strong>on your own computer</strong>, where only you can reach it. It is
+          disclosed here because an extension must explain how it handles data even
+          when that data never leaves the device.
         </p>
       </section>
 
@@ -96,15 +142,20 @@
             from the saved-origin URL before storing.</li>
           <li><strong>Your own notes</strong>: free text you type on a card is kept as written.</li>
           <li>Organisation: list membership, whether you marked it as a card you
-            already <strong>have</strong>, an optional cart price cap, when it was
-            saved, and where from — product page or listing page, which list you chose,
-            and the price at that moment.</li>
+            already <strong>have</strong>, how many copies you own, an optional cart price
+            cap, when it was saved, and where from — product page or listing page, which
+            list you chose, and the price at that moment.</li>
         </ul>
         <p>
           Also stored: your list names, whether each list is a deck or a collection,
           an optional per-list spend budget, and extension settings
           (junk-term filter, seller preferences, price polling and retention, and whether
           you accepted the cart risk notice).
+        </p>
+        <p>
+          The extension does not ask for and does not store your name, email address,
+          postal address, phone number, payment details, or TCGplayer account
+          credentials.
         </p>
       </section>
 
@@ -132,6 +183,24 @@
       </section>
 
       <section>
+        <h2>Limited Use</h2>
+        <p>
+          TCGCompanion's use of information complies with the
+          <strong>Chrome Web Store User Data Policy, including the Limited Use
+          requirements</strong>. Data is used only to provide the extension's single
+          purpose — a local TCGplayer card watchlist with listing filters, price
+          snapshots and manual cart-prep tools.
+        </p>
+        <p>
+          It is never transferred to third parties, never used or transferred for
+          advertising of any kind, including personalised, re-targeted or
+          interest-based advertising, and never used to determine creditworthiness or
+          for lending purposes. No human reads your data, because no data reaches the
+          developer.
+        </p>
+      </section>
+
+      <section>
         <h2>Cart assistance</h2>
         <p>
           Cart tools are <strong>off by default</strong> and stay off until you enable them
@@ -150,20 +219,98 @@
       </section>
 
       <section>
-        <h2>Backups and deletion</h2>
+        <h2>Your control, retention and deletion</h2>
+        <p>
+          Because the data is on your machine, you hold it directly. You can view and
+          edit every saved card and list in the dashboard, remove cards individually or
+          in bulk, and delete whole lists. To remove everything at once, uninstall the
+          extension — Chrome deletes its local storage with it. There is no in-product
+          “erase all data” button.
+        </p>
+        <p>
+          Retention is yours to set: price-history samples are bounded and pruned
+          according to the retention setting on the options page. Nothing is retained by
+          the developer, because nothing is sent to the developer. There is no account to
+          close and no deletion request to submit — and equally, no way for the developer
+          to recover data you delete.
+        </p>
         <p>
           Export writes a JSON backup to a location you choose; import reads a file you
           choose and merges it without deleting existing records. An exported backup
           contains everything described above, including your notes and the stored URLs —
-          treat the file the way you would treat the shortlist itself.
-        </p>
-        <p>
-          Uninstalling the extension removes its local storage. Individual cards and lists
-          can be deleted from the dashboard at any time.
+          treat the file the way you would treat the collection itself.
         </p>
       </section>
 
-      <footer>Support contact: see the Chrome Web Store listing.</footer>
+      <section>
+        <h2>Security</h2>
+        <p>
+          Your data is protected by Chrome's own extension storage isolation and by the
+          security of your computer and browser profile. Because nothing is transmitted,
+          there is no server to breach, no database of users, and no data in transit to
+          intercept.
+        </p>
+        <p>
+          Two honest limits: anyone with access to your unlocked computer and browser
+          profile can read the extension's data, and an exported backup file is a plain
+          JSON file with no encryption. Store backups accordingly.
+        </p>
+      </section>
+
+      <section>
+        <h2>Do Not Track</h2>
+        <p>
+          TCGCompanion does not track you across websites or over time, and does not
+          build any profile of you. Because it performs no tracking at all, there is
+          nothing for a browser “Do Not Track” signal to switch off, and the extension
+          does not alter its behaviour in response to one.
+        </p>
+        <p>
+          No other party conducts tracking through this extension. This disclosure is
+          provided under California Business and Professions Code section 22575(b)(5).
+        </p>
+      </section>
+
+      <section>
+        <h2>Children</h2>
+        <p>
+          TCGCompanion is a general-audience tool and is not directed to children under
+          13. The developer does not knowingly collect personal information from
+          children under 13 — and in fact collects no personal information from anyone,
+          as described above.
+        </p>
+      </section>
+
+      <section>
+        <h2>Changes to this policy</h2>
+        <p>
+          If this policy changes, the effective date at the top of this page is updated
+          and the revised policy is posted at this same address before the change takes
+          effect in the extension. Material changes to what the extension does with your
+          data will also be disclosed in the extension's own interface and in the Chrome
+          Web Store listing, so that a change in data handling is never applied silently
+          to an existing install.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact and governing law</h2>
+        <p>
+          Questions about this policy or the extension can be sent through the support
+          channel on the TCGCompanion Chrome Web Store listing.
+        </p>
+        <p>
+          TCGCompanion is published by an individual developer based in New York State,
+          United States. This policy is governed by the laws of the State of New York
+          and applicable United States federal law.
+        </p>
+        <p class="stamp">
+          TCGCompanion is an independent tool. It is not affiliated with, endorsed by,
+          or sponsored by TCGplayer, Inc. or any trading card game publisher.
+        </p>
+      </section>
+
+      <footer>TCGCompanion — local-first, no server, no tracking.</footer>
     </main>
   </body>
 </html>
