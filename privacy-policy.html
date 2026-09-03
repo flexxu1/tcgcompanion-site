@@ -91,25 +91,51 @@
           you delete it or export it yourself.
         </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 19 August 2026 · Applies to TCGCompanion
-          version 0.1.0 and later. Last verified against the extension source on
-          25 August 2026.
+          <strong>Effective date:</strong> 3 September 2026 · Applies to TCGCompanion
+          version 0.2.0 and later (first published 19 August 2026 for 0.1.0).
+          Last verified against the extension source on 3 September 2026.
         </p>
       </header>
 
       <section class="callout">
-        <h2>No network activity of its own</h2>
+        <h2>Network activity: one purpose-limited call</h2>
         <p>
-          As of the effective date above, the shipped code contains no
+          Deck import is the only feature that makes a network request of its own.
+          When you run <em>Import a deck</em>, the card names you typed are sent to
+          the Pok&eacute;mon TCG API (<code>api.pokemontcg.io</code>) to look up card
+          identities &mdash; names, sets, numbers and card images &mdash; so you can
+          pick the exact printing you mean. Nothing else is ever sent: no prices, no
+          browsing data, no identifiers, and nothing at all unless you use that
+          feature. Prices are never taken from this API.
+        </p>
+        <p>
+          Cards added through deck import store three extra identity fields: where
+          the match came from (<code>importedFrom</code>, always the Pok&eacute;mon
+          TCG API), the API's card id (<code>importApiId</code>), and the API's
+          product pointer (<code>importUrl</code>). These are provenance only
+          &mdash; imported cards carry no price until you open their TCGplayer page
+          yourself, exactly like any other unpriced card.
+        </p>
+        <p>
+          Beyond that one call there is no external server, cloud sync, analytics,
+          advertising, telemetry, or crash reporting, and no other
           <code>fetch</code>, <code>XMLHttpRequest</code>, <code>WebSocket</code> or
-          <code>sendBeacon</code> call anywhere. There is no external server, cloud
-          sync, analytics, advertising, telemetry, or crash reporting. If that ever
-          changes, this policy will be updated before the change ships — see
+          <code>sendBeacon</code> call anywhere in the shipped code. If that ever
+          changes, this policy will be updated before the change ships &mdash; see
           <em>Changes to this policy</em> below.
         </p>
         <p>
           Prices are read from TCGplayer pages <strong>you already have open</strong> in
           your own browser session. The extension never fetches TCGplayer pages by itself.
+        </p>
+        <p>
+          <strong>Card pictures.</strong> When the dashboard shows a card's picture, your
+          browser loads that image from the address stored with the card &mdash;
+          TCGplayer's own image servers for cards saved from the site, or the
+          Pok&eacute;mon TCG API's image host for imported cards &mdash; the same request
+          the site itself makes when you browse. Nothing but the image address is sent.
+          Only those two hosts are ever loaded from; a backup naming any other host
+          renders &ldquo;No image&rdquo; instead.
         </p>
       </section>
 
@@ -171,7 +197,8 @@
 
       <section>
         <h2>Site access</h2>
-        <p>Host access is limited to <code>https://*.tcgplayer.com/*</code>, and is used to:</p>
+        <p>Host access is limited to <code>https://*.tcgplayer.com/*</code> and, for deck import
+          only, <code>https://api.pokemontcg.io/*</code>. The TCGplayer access is used to:</p>
         <ul>
           <li>Read visible page content to save card identity and visible pricing.</li>
           <li>Filter visible listings by condition, and — only if you enable the junk listing filter — dim listings matching your junk terms.</li>
@@ -249,6 +276,11 @@
           choose and merges it without deleting existing records. An exported backup
           contains everything described above, including your notes and the stored URLs —
           treat the file the way you would treat the collection itself.
+        </p>
+        <p>
+          The cart risk acceptance is deliberately <strong>not</strong> restored from a
+          backup. It is consent given on this install, so a restored profile asks you to
+          read and accept the notice again before cart tools or scheduled refreshes can run.
         </p>
       </section>
 
