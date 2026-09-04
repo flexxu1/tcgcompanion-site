@@ -91,9 +91,10 @@
           you delete it or export it yourself.
         </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 3 September 2026 · Applies to TCGCompanion
-          version 0.2.0 and later (first published 19 August 2026 for 0.1.0).
-          Last verified against the extension source on 3 September 2026.
+          <strong>Effective date:</strong> 4 September 2026 · Applies to TCGCompanion
+          version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
+          helper described in earlier versions was removed in 0.2.1).
+          Last verified against the extension source on 4 September 2026.
         </p>
       </header>
 
@@ -175,8 +176,7 @@
         <p>
           Also stored: your list names, whether each list is a deck or a collection,
           an optional per-list spend budget, and extension settings
-          (junk-term filter, seller preferences, price polling and retention, and whether
-          you accepted the cart risk notice).
+          (junk-term filter, seller preferences, and price-history retention).
         </p>
         <p>
           <strong>Housekeeping records.</strong> Alongside the above the extension keeps a
@@ -202,20 +202,23 @@
         <ul>
           <li>Read visible page content to save card identity and visible pricing.</li>
           <li>Filter visible listings by condition, and — only if you enable the junk listing filter — dim listings matching your junk terms.</li>
-          <li>Evaluate visible seller and listing text for local cart-matching decisions.</li>
+          <li>Evaluate visible seller and listing text to outline, on a product page you
+            opened from the buy list, the one listing that matches your condition,
+            language and price cap. The extension never operates a control on the page.</li>
           <li>Capture price samples from TCGplayer tabs that are already open, and update
             local price history for saved cards on those pages.</li>
         </ul>
         <p>
           That access also lets the extension see <strong>which TCGplayer tabs you
-          currently have open</strong> — this is how “refresh from open tabs” finds pages
-          to read. It is used only to locate TCGplayer tabs. No browsing outside
-          tcgplayer.com is visible to it, and nothing about your tabs leaves your machine.
+          currently have open</strong> — this is how the dashboard’s “refresh from open
+          tabs” button finds pages to read. It is used only to locate TCGplayer tabs. No
+          browsing outside tcgplayer.com is visible to it, and nothing about your tabs
+          leaves your machine.
         </p>
         <p>
           Permissions requested: <code>storage</code> and <code>unlimitedStorage</code> for
-          local shortlist data, and <code>alarms</code> to schedule the optional open-tab
-          price refresh, which is off by default.
+          local shortlist data. Nothing else — in particular there is no
+          <code>alarms</code> permission, so the extension has no way to run on a timer.
         </p>
       </section>
 
@@ -226,7 +229,7 @@
           <strong>Chrome Web Store User Data Policy, including the Limited Use
           requirements</strong>. Data is used only to provide the extension's single
           purpose — a local TCGplayer card watchlist with listing filters, price
-          snapshots and manual cart-prep tools.
+          snapshots and a buy list of links to the cards you still need.
         </p>
         <p>
           It is never transferred to third parties, never used or transferred for
@@ -238,20 +241,39 @@
       </section>
 
       <section>
-        <h2>Cart assistance</h2>
+        <h2>The buy list, and what it replaced</h2>
         <p>
-          Cart tools are <strong>off by default</strong> and stay off until you enable them
-          and accept an explicit risk notice.
+          The extension <strong>never adds anything to your cart</strong>. The buy list is a
+          list of ordinary links: each opens a saved card’s TCGplayer product page in a new
+          tab, and the extension outlines the listing that matches your condition, language
+          and price cap. You add it to your cart and check out yourself. Nothing is opened in
+          a hidden tab, nothing is clicked for you, and no listing is chosen without you
+          looking at it.
         </p>
         <p>
-          When enabled, cart population uses your normal browser session and stops at
-          add-to-cart. It does not automate checkout, payment or account changes, and does
-          not spoof identity, solve CAPTCHAs, or bypass challenges. Automation is blocked
-          outright on cart, checkout, order, payment, account, login and challenge pages.
+          Until version 0.2.1 there was an opt-in cart helper that opened product pages in
+          background tabs and pressed their Add to Cart control. The 3 September 2026 Terms
+          of Service audit found that a hidden page load plus a scripted click on a commerce
+          control is exactly what a marketplace may treat as a bot, and that the consequence
+          would fall on your TCGplayer account. It was removed rather than kept behind a
+          checkbox; a test in the repository fails the build if it comes back.
+        </p>
+        <h2>Nothing runs without you</h2>
+        <p>
+          Every price the extension holds was read from a page you were looking at.
+          Nothing runs on a schedule, nothing opens or reloads a page, and nothing is
+          fetched from TCGplayer. A price on the dashboard is therefore only as fresh as
+          your last visit to that card’s page, and a list budget is an estimate built from
+          those last-seen prices.
         </p>
         <p>
-          Using it may still breach TCGplayer’s Terms of Service. That is your decision,
-          which is why it is opt-in and gated behind the notice.
+          Until version 0.3.0 there was an opt-in scheduled refresh that re-read prices
+          from TCGplayer tabs you already had open, on a timer, behind a risk notice. It
+          sent no requests, but it was automated collection of pricing information, which
+          TCGplayer’s API terms describe as something browser add-ons must not do. It was
+          removed outright, together with the <code>alarms</code> permission and its
+          settings; an upgraded profile has them deleted on first run. The extension does
+          not spoof identity, solve CAPTCHAs or bypass challenges.
         </p>
       </section>
 
@@ -278,9 +300,8 @@
           treat the file the way you would treat the collection itself.
         </p>
         <p>
-          The cart risk acceptance is deliberately <strong>not</strong> restored from a
-          backup. It is consent given on this install, so a restored profile asks you to
-          read and accept the notice again before cart tools or scheduled refreshes can run.
+          A backup written by an older version may carry the settings of the removed
+          scheduled refresh and its risk-notice acceptance; import drops them.
         </p>
       </section>
 
