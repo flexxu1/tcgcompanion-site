@@ -26,6 +26,15 @@
         * Children under 13           -> COPPA, 15 U.S.C. 6501-6506.
         * Retention / security /      -> Chrome Web Store user-data guidance, which asks
           access and deletion            policies to address these even when storage is local.
+        * International users         -> GDPR / UK GDPR (2026-09-12): the store is worldwide
+                                         and those laws have no size threshold, so the page
+                                         states the true position (no processing by the
+                                         developer, no transfer) rather than staying silent.
+                                         Same section covers US state laws in one sentence.
+        * Housekeeping list re-verified against the observed storage shape
+          (artifacts/e2e-workflow/storage-fields.json) and the code on 2026-09-12: the
+          retired 0.3.0 refresh cursor was still listed and is gone; the repair report,
+          legacy list goals and the session-only dashboard tab id were missing and are in.
 
       DELIBERATELY NOT CLAIMED: no CCPA/CPRA rights apparatus and no SHIELD Act
       compliance statement. Neither applies here -- CCPA thresholds (25M USD revenue /
@@ -101,12 +110,15 @@
       <section class="callout">
         <h2>Network activity: none</h2>
         <p>
-          The extension makes no network request of its own. There is no external
-          server, cloud sync, analytics, advertising, telemetry, or crash reporting,
-          and no <code>fetch</code>, <code>XMLHttpRequest</code>, <code>WebSocket</code>
-          or <code>sendBeacon</code> call anywhere in the shipped code. If that ever
-          changes, this policy will be updated before the change ships - see
-          <em>Changes to this policy</em> below.
+          The extension makes no network request of its own, with one exception
+          stated plainly under <em>Card pictures</em> below: showing a saved
+          card's picture loads that image from tcgplayer.com. There is no
+          external server, cloud sync, analytics, advertising, telemetry, or
+          crash reporting, and no <code>fetch</code>,
+          <code>XMLHttpRequest</code>, <code>WebSocket</code> or
+          <code>sendBeacon</code> call anywhere in the shipped code. If that
+          ever changes, this policy will be updated before the change ships -
+          see <em>Changes to this policy</em> below.
         </p>
         <p>
           Deck import works from what you type. When you run <em>Import a deck</em>, the
@@ -175,13 +187,19 @@
           (junk-term filter, seller preferences, and price-history retention).
         </p>
         <p>
-          <strong>Housekeeping records.</strong> Alongside the above the extension keeps a
-          small amount of internal bookkeeping, listed here because this page claims to
-          enumerate everything it stores: the storage key it filed each card under and
-          which identifier that key came from, a version marker recording which release
-          read the page, a cursor noting how far the optional price refresh has walked
-          through your saved cards, and the date of your last backup export so it can
-          remind you when one is overdue. None of it describes you; it exists so the
+          <strong>Housekeeping records.</strong> Alongside the above the
+          extension keeps a small amount of internal bookkeeping, listed here
+          because this page claims to enumerate everything it stores: the
+          storage key it filed each card under and which identifier that key
+          came from; a version marker on each card recording which release read
+          its page; the date of your last backup export, so it can remind you
+          when one is overdue; a one-time repair report noting when the startup
+          consistency pass last ran and which of your own card records it
+          corrected; per-list target values written by versions before budgets
+          existed, kept read-only; and, for the current browser session only,
+          the id of the dashboard tab so it can be brought to the front rather
+          than opened twice (that one lives in session storage and is gone when
+          the browser closes). None of it describes you; it exists so the
           extension can find its own records and avoid repeating work.
         </p>
         <p>
@@ -329,7 +347,30 @@
       </section>
 
       <section>
-        <h2>Children</h2>
+          <h2>International users</h2>
+          <p>
+          The extension is available wherever the Chrome Web Store is. Wherever
+          you are, the position is the same: the developer receives no personal
+          data from you and therefore does not process any. For readers in the
+          European Economic Area, the United Kingdom and Switzerland, that means
+          the developer is not a controller or processor of your personal data
+          under the GDPR or the UK GDPR in respect of this extension, and there
+          is no transfer of personal data off your device. The rights those laws
+          give you - to access, correct, export and erase your data - are
+          exercised directly, in the dashboard and through the export and
+          uninstall steps above, without asking anyone.
+          </p>
+          <p>
+          For readers in California and other US states with consumer privacy
+          laws: the developer does not sell or share personal information, does
+          not use it for targeted advertising or profiling, and has no personal
+          information about you to disclose, correct or delete on request. No
+          opt-out is needed because there is nothing to opt out of.
+          </p>
+        </section>
+
+        <section>
+          <h2>Children</h2>
         <p>
           TCGCompanion is a general-audience tool and is not directed to children under
           13. The developer does not knowingly collect personal information from
