@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TCGCompanion — Privacy Policy</title>
+    <title>TCGCompanion - Privacy Policy</title>
     <meta name="description" content="Privacy policy for the TCGCompanion Chrome extension. Local-only: no server, no sync, no analytics.">
     <!--
       Self-contained on purpose: no external stylesheet, font or script. A privacy
@@ -91,39 +91,36 @@
           you delete it or export it yourself.
         </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 4 September 2026 · Applies to TCGCompanion
+          <strong>Effective date:</strong> 12 September 2026 · Applies to TCGCompanion
           version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 4 September 2026.
+          Last verified against the extension source on 12 September 2026.
         </p>
       </header>
 
       <section class="callout">
-        <h2>Network activity: one purpose-limited call</h2>
+        <h2>Network activity: none</h2>
         <p>
-          Deck import is the only feature that makes a network request of its own.
-          When you run <em>Import a deck</em>, the card names you typed are sent to
-          the Pok&eacute;mon TCG API (<code>api.pokemontcg.io</code>) to look up card
-          identities &mdash; names, sets, numbers and card images &mdash; so you can
-          pick the exact printing you mean. Nothing else is ever sent: no prices, no
-          browsing data, no identifiers, and nothing at all unless you use that
-          feature. Prices are never taken from this API.
-        </p>
-        <p>
-          Cards added through deck import store three extra identity fields: where
-          the match came from (<code>importedFrom</code>, always the Pok&eacute;mon
-          TCG API), the API's card id (<code>importApiId</code>), and the API's
-          product pointer (<code>importUrl</code>). These are provenance only
-          &mdash; imported cards carry no price until you open their TCGplayer page
-          yourself, exactly like any other unpriced card.
-        </p>
-        <p>
-          Beyond that one call there is no external server, cloud sync, analytics,
-          advertising, telemetry, or crash reporting, and no other
-          <code>fetch</code>, <code>XMLHttpRequest</code>, <code>WebSocket</code> or
-          <code>sendBeacon</code> call anywhere in the shipped code. If that ever
-          changes, this policy will be updated before the change ships &mdash; see
+          The extension makes no network request of its own. There is no external
+          server, cloud sync, analytics, advertising, telemetry, or crash reporting,
+          and no <code>fetch</code>, <code>XMLHttpRequest</code>, <code>WebSocket</code>
+          or <code>sendBeacon</code> call anywhere in the shipped code. If that ever
+          changes, this policy will be updated before the change ships - see
           <em>Changes to this policy</em> below.
+        </p>
+        <p>
+          Deck import works from what you type. When you run <em>Import a deck</em>, the
+          card names, copies, printing numbers and set codes you pasted are saved exactly
+          as typed, into a deck on your machine; nothing is looked up anywhere. Cards
+          added this way store three extra fields: where the record came from
+          (<code>importedFrom</code>), the printing number you typed
+          (<code>importNumber</code>) and the set code you typed
+          (<code>importSetHint</code>), each only when present. These are identity only -
+          an imported card carries no price and no picture until you open its TCGplayer
+          page yourself, exactly like any other unpriced card. Until 2026-09-12 deck
+          import sent the typed names to a third-party card database to offer a printing
+          picker; that call, its host permission and its stored fields are gone, and
+          records written by that version are rewritten to the typed shape on first run.
         </p>
         <p>
           Prices are read from TCGplayer pages <strong>you already have open</strong> in
@@ -131,12 +128,10 @@
         </p>
         <p>
           <strong>Card pictures.</strong> When the dashboard shows a card's picture, your
-          browser loads that image from the address stored with the card &mdash;
-          TCGplayer's own image servers for cards saved from the site, or the
-          Pok&eacute;mon TCG API's image host for imported cards &mdash; the same request
-          the site itself makes when you browse. Nothing but the image address is sent.
-          Only those two hosts are ever loaded from; a backup naming any other host
-          renders &ldquo;No image&rdquo; instead.
+          browser loads that image from the address stored with the card - TCGplayer's
+          own image servers - the same request the site itself makes when you browse.
+          Nothing but the image address is sent. That is the only host ever loaded from;
+          a backup naming any other host renders &ldquo;No image&rdquo; instead.
         </p>
       </section>
 
@@ -170,7 +165,7 @@
           <li><strong>Your own notes</strong>: free text you type on a card is kept as written.</li>
           <li>Organisation: list membership, whether you marked it as a card you
             already <strong>have</strong>, how many copies you own, an optional cart price
-            cap, when it was saved, and where from — product page or listing page, which
+            cap, when it was saved, and where from - product page or listing page, which
             list you chose, and the price at that moment.</li>
         </ul>
         <p>
@@ -197,11 +192,10 @@
 
       <section>
         <h2>Site access</h2>
-        <p>Host access is limited to <code>https://*.tcgplayer.com/*</code> and, for deck import
-          only, <code>https://api.pokemontcg.io/*</code>. The TCGplayer access is used to:</p>
+        <p>Host access is limited to <code>https://*.tcgplayer.com/*</code>. It is used to:</p>
         <ul>
           <li>Read visible page content to save card identity and visible pricing.</li>
-          <li>Filter visible listings by condition, and — only if you enable the junk listing filter — dim listings matching your junk terms.</li>
+          <li>Filter visible listings by condition, and - only if you enable the junk listing filter - dim listings matching your junk terms.</li>
           <li>Evaluate visible seller and listing text to outline, on a product page you
             opened from the buy list, the one listing that matches your condition,
             language and price cap. The extension never operates a control on the page.</li>
@@ -210,14 +204,14 @@
         </ul>
         <p>
           That access also lets the extension see <strong>which TCGplayer tabs you
-          currently have open</strong> — this is how the dashboard’s “refresh from open
+          currently have open</strong> - this is how the dashboard’s “refresh from open
           tabs” button finds pages to read. It is used only to locate TCGplayer tabs. No
           browsing outside tcgplayer.com is visible to it, and nothing about your tabs
           leaves your machine.
         </p>
         <p>
           Permissions requested: <code>storage</code> and <code>unlimitedStorage</code> for
-          local shortlist data. Nothing else — in particular there is no
+          local shortlist data. Nothing else - in particular there is no
           <code>alarms</code> permission, so the extension has no way to run on a timer.
         </p>
       </section>
@@ -228,7 +222,7 @@
           TCGCompanion's use of information complies with the
           <strong>Chrome Web Store User Data Policy, including the Limited Use
           requirements</strong>. Data is used only to provide the extension's single
-          purpose — a local TCGplayer card watchlist with listing filters, price
+          purpose - a local TCGplayer card watchlist with listing filters, price
           snapshots and a buy list of links to the cards you still need.
         </p>
         <p>
@@ -283,21 +277,20 @@
           Because the data is on your machine, you hold it directly. You can view and
           edit every saved card and list in the dashboard, remove cards individually or
           in bulk, and delete whole lists. To remove everything at once, uninstall the
-          extension — Chrome deletes its local storage with it. There is no in-product
+          extension - Chrome deletes its local storage with it. There is no in-product
           “erase all data” button.
         </p>
         <p>
           Retention is yours to set: price-history samples are bounded and pruned
           according to the retention setting on the options page. Nothing is retained by
           the developer, because nothing is sent to the developer. There is no account to
-          close and no deletion request to submit — and equally, no way for the developer
+          close and no deletion request to submit - and equally, no way for the developer
           to recover data you delete.
         </p>
         <p>
           Export writes a JSON backup to a location you choose; import reads a file you
           choose and merges it without deleting existing records. An exported backup
-          contains everything described above, including your notes and the stored URLs —
-          treat the file the way you would treat the collection itself.
+          contains everything described above, including your notes and the stored URLs - treat the file the way you would treat the collection itself.
         </p>
         <p>
           A backup written by an older version may carry the settings of the removed
@@ -339,7 +332,7 @@
         <p>
           TCGCompanion is a general-audience tool and is not directed to children under
           13. The developer does not knowingly collect personal information from
-          children under 13 — and in fact collects no personal information from anyone,
+          children under 13 - and in fact collects no personal information from anyone,
           as described above.
         </p>
       </section>
@@ -373,7 +366,7 @@
         </p>
       </section>
 
-      <footer>TCGCompanion — local-first, no server, no tracking.</footer>
+      <footer>TCGCompanion - local-first, no server, no tracking.</footer>
     </main>
   </body>
 </html>
