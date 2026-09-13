@@ -184,7 +184,7 @@
         <p>
           Also stored: your list names, whether each list is a deck or a collection,
           an optional per-list spend budget, and extension settings
-          (junk-term filter, seller preferences, and price-history retention).
+          (junk-term filter, seller preferences, the lowest-price seller guard, price-history retention, whether the extension draws its controls on TCGplayer pages, the backup reminder, theme, and dashboard defaults).
         </p>
         <p>
           <strong>Housekeeping records.</strong> Alongside the above the
@@ -215,18 +215,15 @@
         <ul>
           <li>Read visible page content to save card identity and visible pricing.</li>
           <li>Filter visible listings by condition, and - only if you enable the junk listing filter - dim listings matching your junk terms.</li>
-          <li>Evaluate visible seller and listing text to outline, on a product page you
-            opened from the buy list, the one listing that matches your condition,
-            language and price cap. The extension never operates a control on the page.</li>
+          <li>Evaluate visible seller text to dim (never hide) listings from sellers below the
+            thresholds you set, only if you enable seller preferences. The extension never
+            operates a control on the page.</li>
           <li>Capture price samples from TCGplayer tabs that are already open, and update
             local price history for saved cards on those pages.</li>
         </ul>
         <p>
-          That access also lets the extension see <strong>which TCGplayer tabs you
-          currently have open</strong> - this is how the dashboard’s “refresh from open
-          tabs” button finds pages to read. It is used only to locate TCGplayer tabs. No
-          browsing outside tcgplayer.com is visible to it, and nothing about your tabs
-          leaves your machine.
+          No browsing outside tcgplayer.com is visible to the extension, and nothing about
+          your tabs leaves your machine.
         </p>
         <p>
           Permissions requested: <code>storage</code> and <code>unlimitedStorage</code> for
@@ -258,10 +255,9 @@
         <p>
           The extension <strong>never adds anything to your cart</strong>. The buy list is a
           list of ordinary links: each opens a saved card’s TCGplayer product page in a new
-          tab, and the extension outlines the listing that matches your condition, language
-          and price cap. You add it to your cart and check out yourself. Nothing is opened in
-          a hidden tab, nothing is clicked for you, and no listing is chosen without you
-          looking at it.
+          tab, exactly as the site serves it. You add it to your cart and check out yourself.
+          Nothing is opened in a hidden tab, nothing is clicked for you, and no listing is
+          chosen for you.
         </p>
         <p>
           Until version 0.2.1 there was an opt-in cart helper that opened product pages in
