@@ -103,7 +103,7 @@
           <strong>Effective date:</strong> 12 September 2026 · Applies to TCGCompanion
           version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 15 September 2026 (version 0.4.27).
+          Last verified against the extension source on 26 September 2026 (version 0.4.28).
         </p>
       </header>
 
@@ -166,7 +166,7 @@
 
       <section>
         <h2>What is stored locally</h2>
-        <p>Everything below is kept in <code>chrome.storage.local</code> on your device.</p>
+        <p>Collection data below is kept in <code>chrome.storage.local</code> on your device.</p>
         <p>For each card you save:</p>
         <ul>
           <li>Card identity: name, set, condition, printing, language, product and SKU ids.</li>
@@ -211,7 +211,7 @@
 
       <section>
         <h2>Site access</h2>
-        <p>Host access is limited to <code>https://*.tcgplayer.com/*</code>. It is used to:</p>
+        <p>Host access is limited to <code>https://www.tcgplayer.com/*</code>. It is used to:</p>
         <ul>
           <li>Read visible page content to save card identity and visible pricing.</li>
           <li>Filter visible listings by condition, and - only if you enable the junk listing filter - dim listings matching your junk terms.</li>
@@ -405,6 +405,7 @@
       </section>
 
       <footer>TCGCompanion - local-first, no server, no tracking.</footer>
-    </main>
+    <section><h2>Dashboard display preferences and controls</h2><p>The dashboard keeps <code>tcgc-card-size</code> and <code>tcgc-quick-guide-seen-v1</code> in its extension-origin <code>localStorage</code>: card size and whether the quick guide was dismissed. These display preferences are not included in backups. Card housekeeping may include <code>autoParkedInLikes</code>, so Undo can distinguish automatic fallback membership from an explicit Like. When enabled, our own star, list picker and Have controls appear on supported listing and product pages. Seller storefront tiles are not supported.</p></section>
+</main>
   </body>
 </html>
