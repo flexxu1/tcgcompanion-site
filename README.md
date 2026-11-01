@@ -1,6 +1,11 @@
 # tcgcompanion-site
 
-Public hosting for the TCGCompanion browser extension's privacy policy.
+Public hosting for the TCGPartner browser extension's privacy policy. The extension was
+named TCGCompanion until 1 November 2026; this repository and its URL keep the old name
+on purpose, because the published privacy-policy link depends on them.
+
+TCGPartner is an independent extension and is not affiliated with, endorsed by, or
+sponsored by TCGplayer.
 
 **Live URL:** https://flexxu1.github.io/tcgcompanion-site/privacy-policy.html
 

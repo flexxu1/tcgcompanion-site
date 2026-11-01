@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TCGCompanion - Privacy Policy</title>
-    <meta name="description" content="Privacy policy for the TCGCompanion Chrome extension. Local-only: no server, no sync, no analytics.">
+    <title>TCGPartner - Privacy Policy</title>
+    <meta name="description" content="Privacy policy for the TCGPartner Chrome extension. Local-only: no server, no sync, no analytics.">
     <!--
       Self-contained on purpose: no external stylesheet, font or script. A privacy
       policy that loads third-party assets is making a request on behalf of the
@@ -93,17 +93,23 @@
   <body>
     <main>
       <header>
-        <h1>TCGCompanion Privacy Policy</h1>
+        <h1>TCGPartner Privacy Policy</h1>
         <p class="lede">
-          TCGCompanion is a local-only Chrome extension. It has no account, no
+          TCGPartner is a local-only Chrome extension. It has no account, no
           server, and no sync. Everything it records stays on your machine until
           you delete it or export it yourself.
         </p>
+        <p class="lede">
+          TCGPartner is an independent extension and is not affiliated with, endorsed
+          by, or sponsored by TCGplayer. Until 1 November 2026 it was named
+          TCGCompanion. The rename itself changed only the name and the support
+          address, not how the extension handles your data.
+        </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 30 September 2026 · Applies to TCGCompanion
-          version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
+          <strong>Effective date:</strong> 1 November 2026 · Applies to TCGPartner
+          (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 6 October 2026 (version 0.4.30).
+          Last verified against the extension source on 1 November 2026 (version 0.4.30).
         </p>
       </header>
 
@@ -128,10 +134,14 @@
           as typed, into a deck on your machine; nothing is looked up anywhere. Cards
           added this way store three extra fields: where the record came from
           (<code>importedFrom</code>), the printing number you typed
-          (<code>importNumber</code>) and the set code you typed
+          (<code>importNumber</code>, with the set total after a slash when you typed one,
+          such as &ldquo;010/086&rdquo;) and the set code you typed
           (<code>importSetHint</code>), each only when present. These are identity only -
           an imported card carries no price and no picture until you open its TCGplayer
-          page yourself, exactly like any other unpriced card. Before version 0.4.0
+          page yourself, exactly like any other unpriced card. To tell which imported card
+          a product page is, the extension reads that page's own card number (its
+          &ldquo;Card Number&rdquo; or &ldquo;#&rdquo; detail) while you save the card; the
+          number is used for that comparison and is not stored. Before version 0.4.0
           (2026-09-12) deck import sent the typed names to a third-party card database to
           offer a printing picker; that call, its host permission and its stored fields
           are gone, and records written by earlier versions are rewritten to the typed
@@ -153,6 +163,52 @@
           <code>chrome.storage.session</code>, the browser's temporary extension storage. It
           is cleared when you use it, when you dismiss it, after 30 minutes, or when the
           browser closes, and it never leaves your browser.
+        </p>
+        <p>
+          <strong>Price check before a price sheet.</strong> When you export a price sheet,
+          the export dialog says how many of the list's prices are more than an hour old and
+          offers <em>Check N cards on TCGplayer</em>. <strong>Only if you click it</strong>,
+          your browser opens the first of those cards' TCGplayer product pages in a new tab.
+          On each of them a small TCGPartner bar shows the market price the page displays
+          (read the same way as on any visit) and a <em>Next card</em> link; each next page
+          loads only when you click it. To show that bar, the click remembers the check in
+          <code>chrome.storage.session</code>: the list name, up to 30 product page
+          addresses with the storage keys of the cards they price, and the start time. It is
+          cleared when you stop the check, after 60 minutes, or when the browser closes, and
+          it never leaves your browser.
+        </p>
+        <p>
+          <strong>Importing a list file.</strong> Import also reads a .csv, .tsv, .xlsx (Excel)
+          or .txt list and MTGO (.dek) or Cockatrice (.cod) deck files: a
+          TCGPartner (or, from before the rename, TCGCompanion) price sheet, a TCGplayer app collection or Seller Portal export, a
+          ManaBox, Collectr, Moxfield or Deckbox CSV, a spreadsheet, a deck file, or a plain
+          card list. You can pick the file or drop it on the import panel. The file is read
+          in your browser (an Excel file is unpacked there too, with no library and no
+          upload) and its cards are added to a list as written, with
+          <code>importedFrom</code> set to <code>list-file</code>. When a TCGplayer file names
+          the exact copy's SKU (the seller export's &ldquo;TCGplayer Id&rdquo;, the app
+          export's &ldquo;SKU&rdquo;), that number is kept as <code>importSkuId</code> so the
+          card's price sheet can list it again; it is dropped if you change the card's
+          condition, printing or language. A price in the file is not
+          stored as the card's price; it is added to the card's note (&ldquo;Price on imported
+          list: ...&rdquo;), as is a printing the extension does not track. The one exception is
+          a TCGplayer Seller Portal pricing export: its <code>TCG Market Price</code> column is
+          TCGplayer's market price, so it becomes the market price
+          (<code>currentMarketPrice</code>, <code>marketObservedAt</code> and a price-history
+          entry) of each saved card it matches, marked with <code>lastPriceSource</code>
+          <code>import</code> and dated when the file was exported (from its file name, or else
+          the file's own modified time). A file or pasted text with no such date never
+          replaces a price read on TCGplayer; it only prices cards that have none. The export dialog's &ldquo;Refresh from seller CSV&rdquo; does
+          only that, for cards you already saved, without adding any. Cost columns (what
+          someone paid) are not read. Nothing is looked up anywhere.
+        </p>
+        <p>
+          <strong>Price sheets</strong> export one list as a
+          spreadsheet or plain-text file with each card's copies, name, set, number,
+          condition, printing, language, TCGplayer Market Price, the time that price was
+          read, and its TCGplayer product id and address - not your notes, lists or Have
+          marks. It is a file your browser downloads. Every feature is free; nothing about
+          tiers or licences is stored.
         </p>
         <p>
           Prices are read from TCGplayer pages <strong>you already have open</strong> in
@@ -193,7 +249,7 @@
         <ul>
           <li>Card identity: name, set, condition, printing, language, product and SKU ids.</li>
           <li>Prices: current market and low price, the condition, printing and language
-            the low price was measured at, when that low price was last seen on a listing, plus a bounded history of samples, each with a
+            the low price was measured at, when that low price was last seen on a listing, when the market price was last read from a page, plus a bounded history of samples, each with a
             timestamp, the activity that produced it and that same condition/printing/language.</li>
           <li><strong>URLs</strong>: the TCGplayer product or listing address the card came
             from, and the card image address. Query strings and fragments are stripped
@@ -221,10 +277,10 @@
           corrected; per-list target values written by versions before budgets
           existed, kept read-only; and, for the current browser session only,
           the id of the dashboard tab so it can be brought to the front rather
-          than opened twice, and the one pending imported-card choice
+          than opened twice, the one pending imported-card choice
           described above - that card's storage key, the name you typed and the
-          time (both live in session storage and are gone when the browser
-          closes; the pending choice also clears after 30 minutes). None of it describes you; it exists so the
+          time - and a price check you started, described above (all live in session storage and are gone when the browser
+          closes; the pending choice also clears after 30 minutes, the price check after 60). None of it describes you; it exists so the
           extension can find its own records and avoid repeating work.
         </p>
         <p>
@@ -260,7 +316,7 @@
       <section>
         <h2>Limited Use</h2>
         <p>
-          TCGCompanion's use of information complies with the
+          TCGPartner's use of information complies with the
           <strong>Chrome Web Store User Data Policy, including the Limited Use
           requirements</strong>. Data is used only to provide the extension's single
           purpose - a local TCGplayer card watchlist with listing filters, price
@@ -364,7 +420,7 @@
       <section>
         <h2>Do Not Track</h2>
         <p>
-          TCGCompanion does not track you across websites or over time, and does not
+          TCGPartner does not track you across websites or over time, and does not
           build any profile of you. Because it performs no tracking at all, there is
           nothing for a browser “Do Not Track” signal to switch off, and the extension
           does not alter its behaviour in response to one.
@@ -401,7 +457,7 @@
         <section>
           <h2>Children</h2>
         <p>
-          TCGCompanion is a general-audience tool and is not directed to children under
+          TCGPartner is a general-audience tool and is not directed to children under
           13. The developer does not knowingly collect personal information from
           children under 13 - and in fact collects no personal information from anyone,
           as described above.
@@ -424,13 +480,13 @@
         <h2>Contact and governing law</h2>
         <p>
           Questions about this policy or the extension can be sent through the support
-          channel on the TCGCompanion Chrome Web Store listing, on public GitHub Issues at
+          channel on the TCGPartner Chrome Web Store listing, on public GitHub Issues at
           <a href="https://github.com/flexxu1/tcgcompanion-site/issues">github.com/flexxu1/tcgcompanion-site/issues</a>,
           or with the Contact us form on the dashboard.
         </p>
         <p>
           The Contact us form sends nothing itself. It builds a message addressed to
-          help.tcgcompanion@gmail.com from what you type (your email address, the request
+          help.tcgpartner@gmail.com from what you type (your email address, the request
           type and your message), plus the extension version and your browser's user-agent
           string, and hands it to your own email: your mail app, or Gmail's compose page in
           a new tab. Nothing leaves your device until you press send there, the extension
@@ -438,17 +494,18 @@
           send it, from your own address.
         </p>
         <p>
-          TCGCompanion is published by an individual developer based in New York State,
+          TCGPartner is published by an individual developer based in New York State,
           United States. This policy is governed by the laws of the State of New York
           and applicable United States federal law.
         </p>
         <p class="stamp">
-          TCGCompanion is an independent tool. It is not affiliated with, endorsed by,
-          or sponsored by TCGplayer, Inc. or any trading card game publisher.
+          TCGPartner is an independent extension and is not affiliated with, endorsed by,
+          or sponsored by TCGplayer. It is not affiliated with TCGplayer, Inc. or any
+          trading card game publisher.
         </p>
       </section>
 
-      <footer>TCGCompanion - local-first, no server, no tracking.</footer>
+      <footer>TCGPartner - local-first, no server, no tracking.</footer>
     <section><h2>Dashboard display preferences and controls</h2><p>The dashboard keeps <code>tcgc-card-size</code> and <code>tcgc-quick-guide-seen-v1</code> in its extension-origin <code>localStorage</code>: card size and whether the quick guide was dismissed. These display preferences are not included in backups. Card housekeeping may include <code>autoParkedInLikes</code>, so Undo can distinguish automatic fallback membership from an explicit Like. When enabled, our own star, list picker and Have controls appear on supported listing and product pages. Seller storefront tiles are not supported.</p></section>
 </main>
   </body>
