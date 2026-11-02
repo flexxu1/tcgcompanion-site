@@ -106,7 +106,7 @@
           address, not how the extension handles your data.
         </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 1 November 2026 · Applies to TCGPartner
+          <strong>Effective date:</strong> 2 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
           Last verified against the extension source on 2 November 2026 (version 0.5.0).
@@ -124,7 +124,12 @@
           external server, cloud sync, analytics, advertising, telemetry, or
           crash reporting, and no <code>fetch</code>,
           <code>XMLHttpRequest</code>, <code>WebSocket</code>,
-          <code>EventSource</code> or <code>sendBeacon</code> call anywhere in the shipped code. If that
+          <code>EventSource</code> or <code>sendBeacon</code> call anywhere in the extension's own code.
+          The one piece of code that has a file loader is the photo reader's built-in ONNX Runtime
+          (see <em>Reading a photo or screenshot</em>), which uses it only to read its own files
+          from the extension; the extension's content security policy
+          (<code>connect-src 'self'</code>) makes Chrome refuse any connection from the
+          extension's pages to anywhere else. If that
           ever changes, this policy will be updated before the change ships -
           see <em>Changes to this policy</em> below.
         </p>
@@ -207,6 +212,17 @@
           replaces a price read on TCGplayer; it only prices cards that have none. The export dialog's &ldquo;Refresh from seller CSV&rdquo; does
           only that, for cards you already saved, without adding any. Cost columns (what
           someone paid) are not read. Nothing is looked up anywhere.
+        </p>
+        <p>
+          <strong>Reading a photo or screenshot.</strong> The import panel can read a photo or
+          screenshot of one card or of a card list (picked, pasted or dropped on the panel). The
+          picture is read <strong>on your computer</strong>: the text reader (PaddleOCR models run
+          by ONNX Runtime, both built into the extension) loads from the extension's own files
+          only when you pick a picture, and neither the picture nor the text read from it is
+          sent anywhere. The text goes into the import box, where you check and correct it
+          before anything is added; words the reader was unsure of are marked. The picture
+          is shown to you while you check it and is then forgotten: it is not saved, and only
+          the card lines you add are stored, exactly like typed ones.
         </p>
         <p>
           <strong>Price sheets</strong> export one list as a
