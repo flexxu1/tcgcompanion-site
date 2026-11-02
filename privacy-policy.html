@@ -140,8 +140,9 @@
           an imported card carries no price and no picture until you open its TCGplayer
           page yourself, exactly like any other unpriced card. To tell which imported card
           a product page is, the extension reads that page's own card number (its
-          &ldquo;Card Number&rdquo; or &ldquo;#&rdquo; detail) while you save the card; the
-          number is used for that comparison and is not stored. Before version 0.4.0
+          &ldquo;Card Number&rdquo; or &ldquo;#&rdquo; detail) while you view or save the card;
+          the number is used for that comparison, and to point out an imported card that this
+          page is a variant of (&ldquo;pick the variant&rdquo;), and is not stored. Before version 0.4.0
           (2026-09-12) deck import sent the typed names to a third-party card database to
           offer a printing picker; that call, its host permission and its stored fields
           are gone, and records written by earlier versions are rewritten to the typed
@@ -178,13 +179,13 @@
           it never leaves your browser.
         </p>
         <p>
-          <strong>Importing a list file.</strong> Import also reads a .csv, .tsv, .xlsx (Excel)
-          or .txt list and MTGO (.dek) or Cockatrice (.cod) deck files: a
+          <strong>Importing a list file.</strong> Import also reads a .csv, .tsv, .xlsx (Excel),
+          .ods (OpenDocument) or .txt list and MTGO (.dek) or Cockatrice (.cod) deck files: a
           TCGPartner (or, from before the rename, TCGCompanion) price sheet, a TCGplayer app collection or Seller Portal export, a
           ManaBox, Collectr, Moxfield or Deckbox CSV, a spreadsheet, a deck file, or a plain
           card list. You can pick the file or drop it on the import panel. The file is read
-          in your browser (an Excel file is unpacked there too, with no library and no
-          upload) and its cards are added to a list as written, with
+          in your browser (an Excel or OpenDocument file is unpacked there too, with no library
+          and no upload) and its cards are added to a list as written, with
           <code>importedFrom</code> set to <code>list-file</code>. When a TCGplayer file names
           the exact copy's SKU (the seller export's &ldquo;TCGplayer Id&rdquo;, the app
           export's &ldquo;SKU&rdquo;), that number is kept as <code>importSkuId</code> so the
