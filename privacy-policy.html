@@ -218,9 +218,11 @@
           screenshot of one card or of a card list (picked, pasted or dropped on the panel). The
           picture is read <strong>on your computer</strong>: the text reader (PaddleOCR models run
           by ONNX Runtime, both built into the extension) loads from the extension's own files
-          only when you pick a picture, and neither the picture nor the text read from it is
-          sent anywhere. The text goes into the import box, where you check and correct it
-          before anything is added; words the reader was unsure of are marked. The picture
+          only when you give it a picture (picked, pasted or dropped), and neither the picture
+          nor the text read from it is sent anywhere. The text goes into the import box, where you check and correct it
+          before anything is added; words the reader was unsure of are marked. A Yu-Gi-Oh!
+          card's name is checked against the same built-in card-name list the .ydk import uses
+          (nothing is looked up online). The picture
           is shown to you while you check it and is then forgotten: it is not saved, and only
           the card lines you add are stored, exactly like typed ones.
         </p>
