@@ -109,7 +109,7 @@
           <strong>Effective date:</strong> 1 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 1 November 2026 (version 0.4.30).
+          Last verified against the extension source on 2 November 2026 (version 0.5.0).
         </p>
       </header>
 
@@ -179,20 +179,24 @@
           it never leaves your browser.
         </p>
         <p>
-          <strong>Importing a list file.</strong> Import also reads a .csv, .tsv, .xlsx (Excel),
-          .ods (OpenDocument) or .txt list and MTGO (.dek) or Cockatrice (.cod) deck files: a
+          <strong>Importing a list file.</strong> Import also reads a .csv, .tsv, .xlsx or .xls (Excel),
+          .ods (OpenDocument) or .txt list and MTGO (.dek), Cockatrice (.cod) or Yu-Gi-Oh! (.ydk) deck files: a
           TCGPartner (or, from before the rename, TCGCompanion) price sheet, a TCGplayer app collection or Seller Portal export, a
           ManaBox, Collectr, Moxfield or Deckbox CSV, a spreadsheet, a deck file, or a plain
           card list. You can pick the file or drop it on the import panel. The file is read
           in your browser (an Excel or OpenDocument file is unpacked there too, with no library
-          and no upload) and its cards are added to a list as written, with
+          and no upload; a .ydk file names cards only by passcode, and their names come from a
+          card list built into the extension, from Yugipedia under CC BY-SA 4.0, so nothing is
+          looked up online) and its cards are added to a list as written, with
           <code>importedFrom</code> set to <code>list-file</code>. When a TCGplayer file names
           the exact copy's SKU (the seller export's &ldquo;TCGplayer Id&rdquo;, the app
           export's &ldquo;SKU&rdquo;), that number is kept as <code>importSkuId</code> so the
           card's price sheet can list it again; it is dropped if you change the card's
           condition, printing or language. A price in the file is not
           stored as the card's price; it is added to the card's note (&ldquo;Price on imported
-          list: ...&rdquo;), as is a printing the extension does not track. The one exception is
+          list: ...&rdquo;), as is a printing the extension does not track, and a language that
+          would otherwise relabel a card you already saved (&ldquo;Language on imported list:
+          ...&rdquo;). The one exception is
           a TCGplayer Seller Portal pricing export: its <code>TCG Market Price</code> column is
           TCGplayer's market price, so it becomes the market price
           (<code>currentMarketPrice</code>, <code>marketObservedAt</code> and a price-history
@@ -320,8 +324,9 @@
           TCGPartner's use of information complies with the
           <strong>Chrome Web Store User Data Policy, including the Limited Use
           requirements</strong>. Data is used only to provide the extension's single
-          purpose - a local TCGplayer card watchlist with listing filters, price
-          snapshots and a buy list of links to the cards you still need.
+          purpose: keeping your own lists of TCGplayer cards - cards to buy, to build a deck
+          with, already owned, or to sell or trade - with prices read from the TCGplayer pages
+          you view, and exporting those lists to files on your computer.
         </p>
         <p>
           The extension never transfers it to third parties, never uses or transfers it for
@@ -386,7 +391,9 @@
         </p>
         <p>
           Export writes a JSON backup to a location you choose; import reads a file you
-          choose and merges it without deleting existing records. An exported backup
+          choose and merges it without deleting existing records. When you already have saved
+          cards, import keeps your current settings; into a new install it restores the
+          backup's settings, and the status line says which. An exported backup
           contains everything described above, including your notes and the stored URLs - treat the file the way you would treat the collection itself.
         </p>
         <p>
@@ -482,7 +489,8 @@
         <p>
           Questions about this policy or the extension can be sent through the support
           channel on the TCGPartner Chrome Web Store listing, on public GitHub Issues at
-          <a href="https://github.com/flexxu1/tcgcompanion-site/issues">github.com/flexxu1/tcgcompanion-site/issues</a>,
+          <a href="https://github.com/flexxu1/tcgcompanion-site/issues">github.com/flexxu1/tcgcompanion-site/issues</a>
+          (<code>tcgcompanion-site</code> is the project's original repository name),
           or with the Contact us form on the dashboard.
         </p>
         <p>
@@ -506,8 +514,9 @@
         </p>
       </section>
 
+      <section><h2>Dashboard display preferences and controls</h2><p>The dashboard keeps <code>tcgc-card-size</code> and <code>tcgc-quick-guide-seen-v1</code> in its extension-origin <code>localStorage</code>: card size and whether the quick guide was dismissed. These display preferences are not included in backups. Card housekeeping may include <code>autoParkedInLikes</code>, so Undo can distinguish automatic fallback membership from an explicit Like. When enabled, our own star, list picker and Have controls appear on TCGplayer search results and product pages. Seller storefront pages are not supported.</p></section>
+
       <footer>TCGPartner - local-first, no server, no tracking.</footer>
-    <section><h2>Dashboard display preferences and controls</h2><p>The dashboard keeps <code>tcgc-card-size</code> and <code>tcgc-quick-guide-seen-v1</code> in its extension-origin <code>localStorage</code>: card size and whether the quick guide was dismissed. These display preferences are not included in backups. Card housekeeping may include <code>autoParkedInLikes</code>, so Undo can distinguish automatic fallback membership from an explicit Like. When enabled, our own star, list picker and Have controls appear on supported listing and product pages. Seller storefront tiles are not supported.</p></section>
 </main>
   </body>
 </html>
