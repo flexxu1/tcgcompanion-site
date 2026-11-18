@@ -274,9 +274,10 @@
           anything is downloaded:
         </p>
         <blockquote><p>
-            When you turn on daily prices, TCGPartner downloads small price files once a day from
+            When you turn on daily prices, TCGPartner downloads price files once a day from
             TCGPartner's price database (a static site on GitHub Pages, run by GitHub, Inc.) and from
-            openapi.tcgtracking.com. Each request asks for a file named after a TCGplayer set or a range of
+            openapi.tcgtracking.com. A download is about 1 to 10 MB, depending on how many TCGplayer sets
+            your cards come from (about 8 MB for 240 cards from 80 sets). Each request asks for a file named after a TCGplayer set or a range of
             product numbers. It carries no account, no cookie, no list, no card names, quantities, conditions or
             prices of yours, and nothing you typed. Like any web server, these hosts can see your IP address, the
             time, your browser's standard headers, and which set files you asked for; from those they could infer
@@ -337,7 +338,7 @@
         <p>Collection data below is kept in <code>chrome.storage.local</code> on your device.</p>
         <p>For each card you save:</p>
         <ul>
-          <li>Card identity: name, set, the collector number its TCGplayer page prints, condition, printing, language, product and SKU ids.</li>
+          <li>Card identity: name, set, the collector number its TCGplayer page prints, condition, printing, language, product and SKU ids, and whether it is a sealed product (a box, pack or tin, which has no condition).</li>
           <li>Prices: current market and low price, the condition, printing and language
             the low price was measured at, when that low price was last seen on a listing, when the market price was last read from a page, plus a bounded history of samples, each with a
             timestamp, the activity that produced it and that same condition/printing/language;
@@ -374,7 +375,7 @@
           than opened twice, the one pending imported-card choice
           described above - that card's storage key, the name you typed and the
           time - a price check you started, described above, and which cards of a buy list you
-          have opened or skipped, kept in the dashboard tab's own session storage until that tab closes (all live in session storage and are gone when the browser
+          have opened or skipped, kept in the dashboard tab's own session storage until that tab closes, and the dashboard's Undo steps - the cards and lists an Undo would put back - so Undo still works after a reload (emptied by Clear all data; all live in session storage and are gone when the browser
           closes; the pending choice also clears after 30 minutes, the price check after 60). None of it describes you; it exists so the
           extension can find its own records and avoid repeating work.
         </p>
