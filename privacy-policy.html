@@ -115,7 +115,7 @@
           <strong>Effective date:</strong> 18 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 18 November 2026 (UTC; version 0.6.0).
+          Last verified against the extension source on 18 November 2026 (UTC; version 0.7.0).
         </p>
       </header>
 
@@ -139,8 +139,9 @@
           The one other piece of code that has a file loader is the photo reader's built-in ONNX Runtime
           (see <em>Reading a photo or screenshot</em>), which uses it only to read its own files
           from the extension. The extension's content security policy
-          (<code>connect-src</code>: the extension's own files only; the price service's one host is
-          added in the version that offers Daily prices - version 0.6.0 does not offer them yet)
+          (<code>connect-src</code>: the extension's own files and, from version 0.7.0, the price
+          service's one host, <code>https://tcgpartner-prices.tcgpartner.workers.dev</code>; in version
+          0.6.0 and earlier, the extension's own files only)
           makes Chrome refuse any connection from the extension's pages and worker to anywhere else.
           If that ever changes, this policy will be updated before the change ships -
           see <em>Changes to this policy</em> below.
@@ -264,10 +265,9 @@
       <section>
         <h2>Daily prices (optional, off by default)</h2>
         <p>
-          <strong>Status in version 0.6.0:</strong> the code for Daily prices is in this version,
-          but the feature is <strong>not offered yet</strong>: this version cannot reach the price service,
-          so the setting does not appear in Options and none of what follows happens. This section
-          says what will happen once it is offered; this page will be updated, and dated, when it is.
+          <strong>Which versions offer it:</strong> Daily prices are offered from version 0.7.0.
+          Version 0.6.0 and earlier do not offer them: those versions cannot reach the price service,
+          the setting does not appear in their Options, and none of what follows happens in them.
         </p>
         <p>
           Daily prices show TCGplayer's market price for each saved card in its own condition,
