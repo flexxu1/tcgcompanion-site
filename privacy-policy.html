@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TCGPartner - Privacy Policy</title>
-    <meta name="description" content="Privacy policy for the TCGPartner Chrome extension. Local-only: no server, no sync, no analytics.">
+    <meta name="description" content="Privacy policy for the TCGPartner Chrome extension. Your cards stay on your computer: no account, no sync, no analytics; the optional Daily prices ask TCGPartner's own price service.">
     <!--
       Self-contained on purpose: no external stylesheet, font or script. A privacy
       policy that loads third-party assets is making a request on behalf of the
@@ -29,9 +29,11 @@
         * International users         -> GDPR / UK GDPR (2026-09-12): the store is worldwide
                                          and those laws have no size threshold, so the page
                                          states the true position (no processing by the
-                                         developer, no transfer as installed; the opt-in Daily
-                                         prices requests and what the hosts see are stated,
-                                         2026-11-17) rather than staying silent.
+                                         developer as installed; for the opt-in Daily prices,
+                                         since the price API of 2026-11-18, the developer's own
+                                         service processes IP addresses and product numbers:
+                                         controller, processor, purpose, basis, transfers and
+                                         retention are stated) rather than staying silent.
                                          Same section covers US state laws in one sentence.
         * Housekeeping list re-verified against the observed storage shape
           (artifacts/e2e-workflow/storage-fields.json) and the code on 2026-09-12: the
@@ -97,10 +99,11 @@
       <header>
         <h1>TCGPartner Privacy Policy</h1>
         <p class="lede">
-          TCGPartner is a local-only Chrome extension. It has no account, no
-          server, and no sync. Everything it records stays on your machine until
-          you delete it or export it yourself. The one optional feature that downloads
-          anything, <em>Daily prices</em>, is off by default; it is described in full below.
+          TCGPartner is a Chrome extension that keeps your data on your computer. It has no
+          account and no sync. Everything it records stays on your machine until you delete it or
+          export it yourself. The one optional feature that sends anything off your
+          computer, <em>Daily prices</em>, is off by default; what it sends, to whom, and
+          what is and is not logged is described in full below.
         </p>
         <p class="lede">
           TCGPartner is an independent extension and is not affiliated with, endorsed
@@ -125,20 +128,20 @@
           <em>Try Google</em> link below is not a request by the extension: it is a
           search your browser opens only when you click it.) The second exception,
           <em>Daily prices</em> (below), happens only if you turn it on in Options - it is off by
-          default - and never contacts TCGplayer. There is no
-          server run by TCGPartner (the price database is a set of static files published on GitHub
-          Pages), nothing of yours is sent to the developer, and there is no cloud sync, analytics, advertising, telemetry, or
+          default - and never contacts TCGplayer: it asks TCGPartner's own price service for the
+          prices of the products you saved. That service is the only server TCGPartner runs;
+          nothing else of yours is sent to the developer, and there is no cloud sync, analytics, advertising, telemetry, or
           crash reporting. The extension's own code holds exactly one network call
           (<code>fetch</code>), in <code>background/price-db-transport.js</code>, used only by Daily
-          prices and able to request only the price files described below; there is no
+          prices and able to make only the two requests described below; there is no
           <code>XMLHttpRequest</code>, <code>WebSocket</code>,
           <code>EventSource</code> or <code>sendBeacon</code> call anywhere in the extension's own code.
           The one other piece of code that has a file loader is the photo reader's built-in ONNX Runtime
           (see <em>Reading a photo or screenshot</em>), which uses it only to read its own files
           from the extension. The extension's content security policy
-          (<code>connect-src</code>: the extension's own files only; the two Daily prices hosts are
+          (<code>connect-src</code>: the extension's own files only; the price service's one host is
           added in the version that offers Daily prices - version 0.6.0 does not offer them yet, as
-          the price database is not yet published)
+          the price service is not yet running)
           makes Chrome refuse any connection from the extension's pages and worker to anywhere else.
           If that ever changes, this policy will be updated before the change ships -
           see <em>Changes to this policy</em> below.
@@ -263,7 +266,7 @@
         <h2>Daily prices (optional, off by default)</h2>
         <p>
           <strong>Status in version 0.6.0:</strong> the code for Daily prices is in this version,
-          but the feature is <strong>not offered yet</strong>: the price database is not published,
+          but the feature is <strong>not offered yet</strong>: the price service is not running yet,
           so the setting does not appear in Options and none of what follows happens. This section
           says what will happen once it is offered; this page will be updated, and dated, when it is.
         </p>
@@ -271,59 +274,74 @@
           Daily prices show TCGplayer's market price for each saved card in its own condition,
           printing and language without opening each card's page. They are <strong>off</strong>
           until you turn them on in Options, and the first time you do, Options shows this before
-          anything is downloaded:
+          anything is sent:
         </p>
         <blockquote><p>
-            When you turn on daily prices, TCGPartner downloads price files once a day from
-            TCGPartner's price database (a static site on GitHub Pages, run by GitHub, Inc.) and from
-            openapi.tcgtracking.com. A download is about 1 to 10 MB, depending on how many TCGplayer sets
-            your cards come from (about 8 MB for 240 cards from 80 sets). Each request asks for a file named after a TCGplayer set or a range of
-            product numbers. It carries no account, no cookie, no list, no card names, quantities, conditions or
-            prices of yours, and nothing you typed. Like any web server, these hosts can see your IP address, the
-            time, your browser's standard headers, and which set files you asked for; from those they could infer
-            which sets you hold at least one card from. Nothing is sent to TCGplayer. Turn daily prices off in
-            Options at any time to stop all of these requests and delete the downloaded files.
+            When you turn on daily prices, TCGPartner asks its own price service (on Cloudflare
+            Workers, run by Cloudflare, Inc.) for the prices of your saved cards: once a day, and a
+            few seconds after you save new cards. Each request sends the TCGplayer product numbers of
+            your saved cards, and nothing else: no account, no cookie, no card names, conditions,
+            quantities, lists, prices or notes of yours, and nothing you typed. The service sees those
+            product numbers together with your IP address, the time and your browser's standard
+            headers, so it can tell which TCGplayer products you have saved. It does not log or keep
+            the product numbers with your IP address: to stop abuse it keeps only a count of today's
+            lookups under a scrambled form of your IP address, and deletes it the next day. A day's
+            update is about 16 KB for 200 cards and about 115 KB for 2,000 cards. Nothing is sent to
+            TCGplayer. Chrome will also let TCGPartner set a once-a-day timer for the update. Turn
+            daily prices off in Options at any time to stop all of these requests and delete the
+            stored prices.
         </p></blockquote>
         <ul>
-          <li><strong>What is requested</strong>: plain GET requests for public files - the
-            database's <code>manifest.json</code> (at most about once a day), the index files
-            covering your cards' TCGplayer product numbers, the per-set price files those cards
-            belong to, and tcgtracking's per-set price file for the same sets. No cookies or
-            credentials, no referrer; a redirected request is refused; a file that has not
-            changed is not downloaded again. The only thing read from your own data to make them is
-            the TCGplayer product number of each saved card.</li>
-          <li><strong>When</strong>: when you turn the feature on, once a day after that, when
-            you press <em>Update now</em>, and when you save a card from a set whose file is not
-            downloaded yet.</li>
-          <li><strong>What is kept</strong>: the downloaded price files, in the extension's own
-            IndexedDB database (<code>tcgpartner-daily-prices</code>) on this computer, with when
-            they were last checked. They are public prices, not your data: they are not in
-            backups, and turning daily prices off (or <em>Clear all data</em>) deletes them. Your
-            settings for the feature are stored with your other settings: whether it is on and
-            when you accepted this disclosure, and your own estimate percentages if you set any.</li>
-          <li><strong>What the prices are</strong>: TCGplayer market prices via tcgcsv.com (Near
-            Mint) and tcgtracking.com (each condition). This product uses TCGplayer data but is not
-            endorsed or certified by TCGplayer. Where TCGplayer has no market price for a card's own
-            condition, TCGPartner can show an <strong>estimate</strong> (the Near Mint price times a
-            percentage you can change), always labelled, never added into a market total, and kept
-            in its own Estimate column on price sheets. A price read on the card's own page
-            replaces an estimate, and replaces a database price when it is newer.</li>
+          <li><strong>What is sent</strong>: two kinds of request, both to the price service and
+            nowhere else - <code>GET /v1/manifest</code> (at most about once a day: the date of the
+            day's prices and the default estimate percentages) and <code>POST /v1/prices</code>,
+            whose body is <code>{"ids":[...]}</code>: the TCGplayer product numbers of your saved
+            cards, at most 250 per request. The extension checks the body against exactly that shape
+            before it sends anything. No cookies or credentials, no referrer; a redirected request
+            is refused.</li>
+          <li><strong>When</strong>: when you turn the feature on; once a day after that; a few
+            seconds after you save new cards (only their product numbers); when you press
+            <em>Update now</em>; and when the dashboard shows a card whose price is not stored yet.</li>
+          <li><strong>What the service sees, and what is and is not kept</strong>: the product
+            numbers in the request, your IP address, the time, and your browser's standard headers
+            (including the extension's own ID, sent by Chrome as the request's origin). The product
+            numbers are used only to answer that request: they are not written to any log,
+            database or analytics, and the service's request logging is switched off. To stop abuse
+            it counts how many product numbers were looked up from each IP address each day; the IP
+            address is kept only as a one-way hash that changes every day, next to that count, and
+            the count is deleted the next day. Cloudflare, which runs the service, handles each
+            connection as any web host does, under its own privacy policy.</li>
+          <li><strong>What is kept on your computer</strong>: the prices of your saved products, in
+            the extension's own IndexedDB database (<code>tcgpartner-daily-prices</code>), with when
+            they were looked up. They are public prices, not your data: they are not in backups,
+            and turning daily prices off (or <em>Clear all data</em>) deletes them. Your settings
+            for the feature are stored with your other settings: whether it is on and when you
+            accepted this disclosure, and your own estimate percentages if you set any.</li>
+          <li><strong>What the prices are</strong>: TCGplayer market prices, compiled once a day
+            by TCGPartner's price service from public price data. This product uses TCGplayer data
+            but is not endorsed or certified by TCGplayer. Where TCGplayer has no market price for
+            a card's own condition, TCGPartner can show an <strong>estimate</strong> (the Near Mint
+            price times a percentage you can change), always labelled, never added into a market
+            total, and kept in its own Estimate column on price sheets. A price read on the card's
+            own page replaces an estimate, and replaces a daily price when it is newer.</li>
           <li>Daily prices are part of the free extension and are not behind any paid tier.</li>
         </ul>
       </section>
 
       <section>
-        <h2>What the developer collects: nothing</h2>
+        <h2>What the developer collects</h2>
         <p>
-          The developer does not collect, receive, transmit, sell, rent, or share any
-          user data. There is no category of personal information gathered by the
-          developer, and there are <strong>no third parties</strong> with whom
-          information is shared, because the extension never sends your information off
-          your device - with the one exception you choose, <em>Daily prices</em>, whose two
-          price hosts see what any web server sees of a request (described above). The one way typed text can reach an outside site is a
-          <em>Try Google</em> search that you choose to open (described above), which
-          your browser sends to Google like any search you type yourself. The developer receives
-          none of what the Daily prices hosts see.
+          As installed, nothing: the developer does not collect, receive, transmit, sell, rent,
+          or share any user data, and the extension never sends your information off your device.
+          The one exception is the one you choose, <em>Daily prices</em>: then TCGPartner's price
+          service receives the TCGplayer product numbers of your saved cards with your IP address,
+          uses them only to answer each request, and keeps neither, apart from the daily lookup
+          count under a one-way hash of the IP address described above, deleted the next day.
+          Nothing is sold, rented or shared, and no information is shared with
+          <strong>third parties</strong>; Cloudflare runs the service as its host. The one way
+          typed text can reach an outside site is a <em>Try Google</em> search that you choose to
+          open (described above), which your browser sends to Google like any search you type
+          yourself.
         </p>
         <p>
           Everything described in the next section is stored by the extension
@@ -406,9 +424,10 @@
           Permissions requested: <code>storage</code> and <code>unlimitedStorage</code> for
           your saved cards and lists, kept on this computer. One optional permission,
           <code>alarms</code>, is requested only when you turn on Daily prices (Chrome grants it
-          without a prompt, as it carries no warning), so the once-a-day download can run; turning
+          without a prompt, as it carries no warning), so the once-a-day update can run; turning
           Daily prices off gives it back. Until then the extension has no way to run on a timer.
-          No other host is requested: the Daily prices hosts serve their files to any browser.
+          No other host permission is requested: the price service answers the extension's
+          requests without one.
         </p>
       </section>
 
@@ -420,20 +439,22 @@
           requirements</strong>. Data is used only to provide the extension's single
           purpose: keeping your own lists of TCGplayer cards - cards to buy, to build a deck
           with, already owned, or to sell or trade - with prices read from the TCGplayer pages
-          you view (and, if you turn them on, from public daily price files), and exporting those
+          you view (and, if you turn them on, from TCGPartner's daily price service), and exporting those
           lists to files on your computer.
         </p>
         <p>
-          The extension never transfers it to third parties, with one exception you choose: if you
-          turn on Daily prices, the two price hosts receive, as with any web request, your IP address
-          and the names of the set files requested, which show which TCGplayer sets you hold a card
-          from (no account, list, card names, quantities, conditions or prices; the index file names
-          show ranges of product numbers too). Beyond that and the card pictures and searches you
-          open, described above, nothing of yours leaves your device. It never uses or transfers it for
+          The extension never transfers it to third parties. If you turn on Daily prices, TCGPartner's
+          own price service receives the TCGplayer product numbers of your saved cards with your IP
+          address, only to answer with their prices, and keeps neither, apart from a daily lookup
+          count under a one-way hash of the IP address, deleted the next day (described above; no account,
+          list, card names, quantities, conditions or prices are sent). Beyond that and the card
+          pictures and searches you open, described above, nothing of yours leaves your device. It never uses or transfers it for
           advertising of any kind, including personalised, re-targeted or
           interest-based advertising, and never uses it to determine creditworthiness or
-          for lending purposes. No human reads your data, because no data reaches the
-          developer.
+          for lending purposes. No human reads your data: with Daily prices off nothing reaches
+          the developer, and with them on the price service only answers each request
+          automatically: it keeps no product number, and keeps the IP address only as a daily
+          one-way hash next to that day's lookup count, deleted the next day.
         </p>
       </section>
 
@@ -458,8 +479,8 @@
         <p>
           Unless you turn on Daily prices, every price the extension holds was read from a page
           you were looking at. Nothing runs on a schedule, nothing opens or reloads a page, and
-          nothing is fetched from TCGplayer - with Daily prices on too: their once-a-day download
-          is of public price files from the hosts named above, never of a TCGplayer page. Without
+          nothing is fetched from TCGplayer - with Daily prices on too: their once-a-day update
+          asks TCGPartner's price service, never a TCGplayer page. Without
           Daily prices, a price on the dashboard is only as fresh as your last visit to that card’s
           page. Every price says what it is - read on the page, market (Daily prices), from a
           seller CSV, or an estimate - and how old it is.
@@ -475,10 +496,12 @@
         </p>
         <p>
           Daily prices are different in kind, and still a timer: they never read, open or request a
-          TCGplayer page, account or API, and nothing is collected from your browsing. Once a day
-          they download price files published for anyone to read, from TCGPartner's price database
-          (on GitHub Pages, built from tcgcsv.com) and from openapi.tcgtracking.com. They are off by default, run only after you turn them on and read
-          what they do, and stop - timer, files and permission - when you turn them off.
+          TCGplayer page, account or API, and nothing is collected from your browsing (the pages you
+          visit are never sent; only the product numbers of cards you saved are). Once a day
+          they ask TCGPartner's price service for the prices of the product numbers you saved; the
+          service compiles TCGplayer market prices once a day from public price data. They are off
+          by default, run only after you turn them on and read what they do, and stop - timer,
+          stored prices and permission - when you turn them off.
         </p>
       </section>
 
@@ -488,15 +511,19 @@
           Because the data is on your machine, you hold it directly. You can view and
           edit every saved card and list in the dashboard, remove cards individually or
           in bulk, and delete whole lists. To remove everything at once, uninstall the
-          extension - Chrome deletes its local storage, and any downloaded Daily prices files,
-          with it. Turning Daily prices off deletes those files at once. Options also has
+          extension - Chrome deletes its local storage, and any stored Daily prices, with it.
+          Turning Daily prices off deletes them at once; the price service keeps only
+          that day's lookup count under a one-way hash of the IP address, which deletes itself
+          the next day (it cannot be looked up by name or account, so there is nothing to request). Options also has
           <em>Clear all data</em>, which deletes every saved card, list and setting on this
           computer after asking you to confirm.
         </p>
         <p>
           Retention is yours to set: price-history samples are bounded and pruned
-          according to the retention setting on the options page. Nothing is retained by
-          the developer, because nothing is sent to the developer. There is no account to
+          according to the retention setting on the options page. The developer retains nothing
+          that names you: with Daily prices off nothing is sent, and with them on the price service
+          keeps only the daily lookup count under a one-way hash of the IP address, deleted the
+          next day (described above). There is no account to
           close and no deletion request to submit - and equally, no way for the developer
           to recover data you delete.
         </p>
@@ -525,11 +552,13 @@
         <h2>Security</h2>
         <p>
           Your data is protected by Chrome's own extension storage isolation and by the
-          security of your computer and browser profile. Because none of your data is transmitted,
-          there is no server to breach, no database of users, and no data of yours in transit to
-          intercept. If you turn on <em>Daily prices</em>, the price files are downloaded over
-          HTTPS, carry no cookie or credential, are read as data only (never run as code), and a
-          redirected request is refused.
+          security of your computer and browser profile. With Daily prices off none of your data is
+          transmitted, so there is no data of yours in transit to intercept. If you turn on
+          <em>Daily prices</em>, the requests go over HTTPS, carry no cookie or credential, and
+          only product numbers; the answers are read as data only (never run as code), and a
+          redirected request is refused. The price service keeps no account and no record of which
+          products anyone asked for, so there is no such database to breach; what it keeps is the
+          day's lookup counts under daily one-way hashes of IP addresses, deleted the next day.
         </p>
         <p>
           Two honest limits: anyone with access to your unlocked computer and browser
@@ -556,28 +585,41 @@
           <h2>International users</h2>
           <p>
           The extension is available wherever the Chrome Web Store is. Wherever
-          you are, the position is the same: the developer receives no personal
-          data from you and therefore does not process any. For readers in the
-          European Economic Area, the United Kingdom and Switzerland, that means
-          the developer is not a controller or processor of your personal data
-          under the GDPR or the UK GDPR in respect of this extension, and, as
-          installed, nothing personal leaves your device. If you turn on
-          <em>Daily prices</em>, your browser requests public price files from GitHub
-          Pages (GitHub, Inc.) and openapi.tcgtracking.com; like any web request, these
-          carry your IP address, which the GDPR treats as personal data, and the file
-          names show which TCGplayer sets you hold a card from. Those hosts handle that
-          under their own privacy policies; the developer receives none of it. Turning
-          Daily prices off stops these requests. The rights those laws
-          give you - to access, correct, export and erase your data - are
-          exercised directly, in the dashboard and through the export and
-          uninstall steps above, without asking anyone.
+          you are, the position is the same: as installed, the developer receives no
+          personal data from you, and nothing personal leaves your device. If you turn on
+          <em>Daily prices</em>, TCGPartner's price service (hosted by Cloudflare, Inc.)
+          receives with each request your IP address, which the GDPR and the UK GDPR treat
+          as personal data, and the TCGplayer product numbers of your saved cards. They are
+          used only to answer that request; apart from the daily lookup count kept under a
+          one-way hash of the IP address (pseudonymous data, not anonymous) and deleted the
+          next day, nothing of it is kept. Turning Daily prices off stops these requests.
+          </p>
+          <p>
+          For that processing, the developer of TCGPartner is the controller, reachable
+          through the support address under <em>Contact</em> below. The purpose is to answer
+          the price lookups you turned on and to limit abuse of the service; the basis is the
+          developer's legitimate interest in providing the feature you switched on and keeping
+          it available to everyone. Cloudflare, Inc. runs the service as the developer's
+          processor; requests may be handled in Cloudflare data centres outside your country,
+          including the United States, under the safeguards of Cloudflare's data processing
+          addendum (standard contractual clauses, and Cloudflare's certification under the
+          EU-U.S. Data Privacy Framework). The
+          rights those laws give you over the data on your computer - to access, correct,
+          export and erase it - are exercised directly, in the dashboard and through the
+          export and uninstall steps above. For the price service, what is stored is not
+          your name or account but pseudonymous: the daily count sits under a one-way hash of the IP address taken
+          together with that day's date (and a secret), and it is gone the next day.
+          You can object to this processing at any time, simply by turning Daily prices off
+          (which stops it at once) or by writing to the support address, and you can complain
+          to the data protection authority where you live.
           </p>
           <p>
           For readers in California and other US states with consumer privacy
           laws: the developer does not sell or share personal information, does
-          not use it for targeted advertising or profiling, and has no personal
-          information about you to disclose, correct or delete on request. No
-          opt-out is needed because there is nothing to opt out of.
+          not use it for targeted advertising or profiling, and holds no personal
+          information about you beyond, with Daily prices on, the day's lookup count under
+          a one-way hash of the IP address, which is deleted the next day. Nothing is sold or shared, so there
+          is nothing to opt out of; turning Daily prices off stops the price requests.
           </p>
         </section>
 
@@ -586,8 +628,9 @@
         <p>
           TCGPartner is a general-audience tool and is not directed to children under
           13. The developer does not knowingly collect personal information from
-          children under 13 - and in fact collects no personal information from anyone,
-          as described above.
+          children under 13. What the optional Daily prices service sees is used only to
+          answer each request, and all it keeps is the daily lookup count under a one-way
+          hash of the IP address, deleted the next day, as described above.
         </p>
       </section>
 
@@ -635,7 +678,7 @@
 
       <section><h2>Dashboard display preferences and controls</h2><p>The dashboard keeps <code>tcgc-card-size</code> and <code>tcgc-quick-guide-seen-v1</code> in its extension-origin <code>localStorage</code>: card size and whether the quick guide was dismissed. These display preferences are not included in backups. Card housekeeping may include <code>autoParkedInLikes</code>, so Undo can distinguish automatic fallback membership from an explicit Like. When enabled, our own star, list picker and Have controls appear on TCGplayer search results and product pages. Seller storefront pages are not supported.</p></section>
 
-      <footer>TCGPartner - local-first, no server, no tracking.</footer>
+      <footer>TCGPartner - local-first, no account, no tracking.</footer>
 </main>
   </body>
 </html>
