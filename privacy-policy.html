@@ -140,8 +140,7 @@
           (see <em>Reading a photo or screenshot</em>), which uses it only to read its own files
           from the extension. The extension's content security policy
           (<code>connect-src</code>: the extension's own files only; the price service's one host is
-          added in the version that offers Daily prices - version 0.6.0 does not offer them yet, as
-          the price service is not yet running)
+          added in the version that offers Daily prices - version 0.6.0 does not offer them yet)
           makes Chrome refuse any connection from the extension's pages and worker to anywhere else.
           If that ever changes, this policy will be updated before the change ships -
           see <em>Changes to this policy</em> below.
@@ -266,7 +265,7 @@
         <h2>Daily prices (optional, off by default)</h2>
         <p>
           <strong>Status in version 0.6.0:</strong> the code for Daily prices is in this version,
-          but the feature is <strong>not offered yet</strong>: the price service is not running yet,
+          but the feature is <strong>not offered yet</strong>: this version cannot reach the price service,
           so the setting does not appear in Options and none of what follows happens. This section
           says what will happen once it is offered; this page will be updated, and dated, when it is.
         </p>
@@ -443,7 +442,8 @@
           lists to files on your computer.
         </p>
         <p>
-          The extension never transfers it to third parties. If you turn on Daily prices, TCGPartner's
+          The extension never transfers it to third parties, other than to Cloudflare, Inc. acting only
+          as the developer's service provider that hosts the price service. If you turn on Daily prices, TCGPartner's
           own price service receives the TCGplayer product numbers of your saved cards with your IP
           address, only to answer with their prices, and keeps neither, apart from a daily lookup
           count under a one-way hash of the IP address, deleted the next day (described above; no account,
@@ -602,8 +602,10 @@
           it available to everyone. Cloudflare, Inc. runs the service as the developer's
           processor; requests may be handled in Cloudflare data centres outside your country,
           including the United States, under the safeguards of Cloudflare's data processing
-          addendum (standard contractual clauses, and Cloudflare's certification under the
-          EU-U.S. Data Privacy Framework). The
+          addendum: Cloudflare's certification under the EU-U.S. Data Privacy Framework, its
+          UK Extension and the Swiss-U.S. Data Privacy Framework and, where those do not
+          apply, the EU standard contractual clauses with the UK International Data Transfer
+          Addendum. The
           rights those laws give you over the data on your computer - to access, correct,
           export and erase it - are exercised directly, in the dashboard and through the
           export and uninstall steps above. For the price service, what is stored is not
