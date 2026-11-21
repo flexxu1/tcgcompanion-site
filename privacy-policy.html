@@ -113,10 +113,10 @@
           address, not how the extension handles your data.
         </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 19 November 2026 · Applies to TCGPartner
+          <strong>Effective date:</strong> 21 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 19 November 2026 (UTC; version 0.8.0).
+          Last verified against the extension source on 21 November 2026 (UTC; version 0.8.0).
         </p>
       </header>
 
@@ -323,7 +323,10 @@
           <li><strong>What is kept on your computer</strong>: the prices of your saved products, in
             the extension's own IndexedDB database (<code>tcgpartner-daily-prices</code>), with when
             they were looked up. They are public prices, not your data: they are not in backups,
-            and turning daily prices off (or erasing everything in Options) deletes them. Your
+            and turning daily prices off (or erasing everything in Options) deletes them. Which
+            printings each saved product has (names only, no prices) is also kept in the
+            extension's local storage (<code>chrome.storage.local</code>, <code>meta_product_printings</code>), so a card's chips stay the
+            same with daily prices off; it is not in backups, and erasing everything in Options deletes it. Your
             settings for the feature are stored with your other settings: whether you turned it off, whether the one-time line about the update is still to be shown
             (version 0.7.0 also stored when you accepted its disclosure; 0.8.0 keeps from it only that you turned the feature off again, as off, and drops the rest), and your own estimate percentages if you set any.</li>
           <li><strong>What the prices are</strong>: TCGplayer market prices, compiled once a day
@@ -401,7 +404,7 @@
           corrected; per-list target values written by versions before budgets
           existed, kept read-only; and, for the current browser session only,
           the id of the dashboard tab so it can be brought to the front rather
-          than opened twice, the one pending imported-card choice
+          than opened twice, the id of the buy list's tab so <em>Open next</em> opens the next card in that same tab, the one pending imported-card choice
           described above - that card's storage key, the name you typed and the
           time - a price check you started, described above, and which cards of a buy list you
           have opened or skipped, kept in the dashboard tab's own session storage until that tab closes, and the dashboard's Undo steps - the cards and lists an Undo would put back - so Undo still works after a reload (emptied by erasing everything in Options; all live in session storage and are gone when the browser
@@ -473,8 +476,9 @@
         <h2>The buy list, and what it replaced</h2>
         <p>
           The extension <strong>never adds anything to your cart</strong>. The buy list is a
-          list of ordinary links: each opens a saved card’s TCGplayer product page in a new
-          tab, exactly as the site serves it. You add it to your cart and check out yourself.
+          list of ordinary links: each opens a saved card’s TCGplayer product page, filtered to
+          that card’s condition and printing with the site’s own address options, in one tab of
+          its own that the next card then opens in. You add it to your cart and check out yourself.
           Nothing is opened in a hidden tab, nothing is clicked for you, and no listing is
           chosen for you.
         </p>
@@ -659,6 +663,12 @@
           menu on TCGplayer was added. Price labels now read <em>TCGplayer price</em>,
           <em>Lowest listing</em> and <em>Estimate</em>; exported price lists have fixed columns;
           the setting that hid the controls on TCGplayer pages was removed. Users updating from an earlier version are told once in the dashboard (<em>Daily prices are now on. Turn off in Options.</em>) and find this change here and in the store listing; Daily prices can be turned off in Options at any time.
+        </p>
+        <p>
+          0.8.0, 21 November 2026: the buy list opens each card's page filtered to its condition
+          and printing, in one tab of its own (the tab's id is kept for the browser session), and
+          the printings of saved products are kept without prices so the chips stay the same with
+          Daily prices off.
         </p>
       </section>
 
