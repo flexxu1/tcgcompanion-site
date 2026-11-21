@@ -227,17 +227,19 @@
           someone paid) are not read. Nothing is looked up anywhere.
         </p>
         <p>
-          <strong>Reading a photo or screenshot.</strong> The import panel can read a photo or
-          screenshot of one card or of a card list (picked, pasted or dropped on the panel). The
-          picture is read <strong>on your computer</strong>: the text reader (PaddleOCR models run
+          <strong>Reading a photo or screenshot.</strong> Photos are read on this computer and
+          never uploaded. The import panel's <em>Add photos</em> reads a photo or screenshot of
+          cards (one card, a binder page or several cards on a table) or of a card list (picked,
+          pasted or dropped on the panel). The picture is read <strong>on your computer</strong>: the text reader (PaddleOCR models run
           by ONNX Runtime, both built into the extension) loads from the extension's own files
           only when you give it a picture (picked, pasted or dropped), and neither the picture
           nor the text read from it is sent anywhere. The text goes into the import box, where you check and correct it
           before anything is added; words the reader was unsure of are marked. A Yu-Gi-Oh!
-          card's name is checked against the same built-in card-name list the .ydk import uses
-          (nothing is looked up online). The picture
-          is shown to you while you check it and is then forgotten: it is not saved, and only
-          the card lines you add are stored, exactly like typed ones.
+          card's name is checked against the same built-in card-name list the .ydk import uses,
+          and a Pokemon card's against a built-in list of Pokemon card names and numbers
+          (nothing is looked up online). The picture, and small pictures of any card it could
+          not read, are shown to you while you check the result and are then forgotten: they
+          are not saved, and only the card lines you add are stored, exactly like typed ones.
         </p>
         <p>
           <strong>Price lists</strong> export one list, or all your cards, as a spreadsheet (.csv)
@@ -270,7 +272,7 @@
           <strong>Which versions offer it:</strong> Daily prices are on by default from version
           0.8.0. In 0.7.0 they were off until turned on, and Options showed a disclosure before
           anything was sent; 0.6.0 and earlier do not have them: those versions cannot reach the
-          price service and none of what follows happens in them. Updating from 0.6.0 or 0.7.0 to 0.8.0 turns them on, unless you turned them on and then off again in 0.7.0: that choice is kept. Someone whose update turns them on sees one line in the dashboard the first time they open it after the update: <em>Daily prices are now on. Turn off in Options.</em> Nothing is sent before that line has been shown.
+          price service and none of what follows happens in them. Updating from 0.6.0 or 0.7.0 to 0.8.0 turns them on, unless you turned them on and then off again in 0.7.0: that choice is kept. Someone whose update turns them on sees one line in the dashboard the first time they open it after the update: <em>Daily prices are now on. Turn off in Options.</em> It stays until they close it. Nothing is sent before that line has been shown.
         </p>
         <p>
           Daily prices show TCGplayer's price for each saved card in its own condition, printing
@@ -327,7 +329,7 @@
             printings each saved product has (names only, no prices) is also kept in the
             extension's local storage (<code>chrome.storage.local</code>, <code>meta_product_printings</code>), so a card's chips stay the
             same with daily prices off; it is not in backups, and erasing everything in Options deletes it. Your
-            settings for the feature are stored with your other settings: whether you turned it off, whether the one-time line about the update is still to be shown
+            settings for the feature are stored with your other settings: whether you turned it off, whether the line about the update is still to be shown or has been closed
             (version 0.7.0 also stored when you accepted its disclosure; 0.8.0 keeps from it only that you turned the feature off again, as off, and drops the rest), and your own estimate percentages if you set any.</li>
           <li><strong>What the prices are</strong>: TCGplayer market prices, compiled once a day
             by TCGPartner's price service from public price data, shown as <em>TCGplayer
@@ -662,13 +664,22 @@
           0.8.0: Daily prices are on by default; the one-card lookup when you open TCGPartner's
           menu on TCGplayer was added. Price labels now read <em>TCGplayer price</em>,
           <em>Lowest listing</em> and <em>Estimate</em>; exported price lists have fixed columns;
-          the setting that hid the controls on TCGplayer pages was removed. Users updating from an earlier version are told once in the dashboard (<em>Daily prices are now on. Turn off in Options.</em>) and find this change here and in the store listing; Daily prices can be turned off in Options at any time.
+          the setting that hid the controls on TCGplayer pages was removed. Users updating from an earlier version are told in the dashboard (<em>Daily prices are now on. Turn off in Options.</em>) and find this change here and in the store listing; Daily prices can be turned off in Options at any time.
         </p>
         <p>
           0.8.0, 21 November 2026: the buy list opens each card's page filtered to its condition
           and printing, in one tab of its own (the tab's id is kept for the browser session), and
           the printings of saved products are kept without prices so the chips stay the same with
           Daily prices off.
+        </p>
+        <p>
+          0.8.0, 21 November 2026: <em>Add photos</em> reads every card in a photo (a binder
+          page, cards on a table), and the Import dialog says that photos are read on this
+          computer and never uploaded. Photos still never leave your computer.
+        </p>
+        <p>
+          0.8.0, 21 November 2026: the Daily prices line shown after an update stays until it is
+          closed.
         </p>
       </section>
 
