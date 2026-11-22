@@ -113,10 +113,10 @@
           address, not how the extension handles your data.
         </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 21 November 2026 · Applies to TCGPartner
+          <strong>Effective date:</strong> 22 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 21 November 2026 (UTC; version 0.8.0).
+          Last verified against the extension source on 22 November 2026 (UTC; version 0.8.0).
         </p>
       </header>
 
@@ -124,8 +124,8 @@
         <h2>Network activity: the daily price update</h2>
         <p>
           The extension makes two kinds of network request of its own. The first is stated
-          plainly under <em>Card pictures</em> below: showing a saved card's picture loads that
-          image from tcgplayer.com. (The <em>Try Google</em> link below is not a request by the
+          plainly under <em>Card pictures</em> below: showing a card's picture (a saved card's,
+          or a printing offered after reading a photo) loads that image from tcgplayer.com. (The <em>Try Google</em> link below is not a request by the
           extension: it is a search your browser opens only when you click it.) The second is the
           daily price update, <em>Daily prices</em> (below): on by default from version 0.8.0 unless
           you turn it off in Options (in version 0.7.0, off until you turned it on). It never
@@ -236,8 +236,14 @@
           nor the text read from it is sent anywhere. The text goes into the import box, where you check and correct it
           before anything is added; words the reader was unsure of are marked. A Yu-Gi-Oh!
           card's name is checked against the same built-in card-name list the .ydk import uses,
-          and a Pokemon card's against a built-in list of Pokemon card names and numbers
-          (nothing is looked up online). The picture, and small pictures of any card it could
+          and every card's text against a built-in copy of TCGplayer's card catalog for its game
+          (Pokemon, Magic: The Gathering, Yu-Gi-Oh!, Disney Lorcana, One Piece; nothing is looked
+          up online). When the photo
+          does not show which printing a card is, the most likely printings are shown as their
+          card pictures for you to pick from. Those pictures load from TCGplayer's image servers
+          like every card picture (see <em>Card pictures</em>), so those servers see which
+          printings were offered, as they see every card picture the extension shows; the photo
+          and the text read from it are never sent. The picture, and small pictures of any card it could
           not read, are shown to you while you check the result and are then forgotten: they
           are not saved, and only the card lines you add are stored, exactly like typed ones.
         </p>
@@ -260,8 +266,10 @@
         <p>
           <strong>Card pictures.</strong> When the dashboard shows a card's picture, your
           browser loads that image from the address stored with the card - TCGplayer's
-          own image servers - the same request the site itself makes when you browse.
-          Nothing but the image address is sent. That is the only host ever loaded from;
+          own image servers - the same request the site itself makes when you browse. The
+          printings offered after reading a photo load their pictures the same way, from the
+          product id in the built-in catalog. Nothing but the image address is sent. That is
+          the only host ever loaded from;
           a backup naming any other host renders &ldquo;No image&rdquo; instead.
         </p>
       </section>
@@ -680,6 +688,12 @@
         <p>
           0.8.0, 21 November 2026: the Daily prices line shown after an update stays until it is
           closed.
+        </p>
+        <p>
+          0.8.0, 22 November 2026: photos are matched against a built-in copy of TCGplayer's card
+          catalog, and a card whose printing is not clear is shown as the likely printings'
+          pictures, loaded from TCGplayer's image servers (which see the printings offered).
+          Photos still never leave your computer.
         </p>
       </section>
 
