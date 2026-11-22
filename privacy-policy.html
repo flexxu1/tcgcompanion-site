@@ -239,11 +239,13 @@
           and every card's text against a built-in copy of TCGplayer's card catalog for its game
           (Pokemon, Magic: The Gathering, Yu-Gi-Oh!, Disney Lorcana, One Piece; nothing is looked
           up online). When the photo
-          does not show which printing a card is, the most likely printings are shown as their
-          card pictures for you to pick from. Those pictures load from TCGplayer's image servers
-          like every card picture (see <em>Card pictures</em>), so those servers see which
-          printings were offered, as they see every card picture the extension shows; the photo
-          and the text read from it are never sent. The picture, and small pictures of any card it could
+          does not show which printing a card is, the most likely printings are shown for you to
+          pick from by their set, number and name, as text: no picture is loaded until you ask.
+          Pointing at or picking one printing loads that printing's picture, and &ldquo;Show
+          pictures&rdquo; loads the pictures of all the printings offered. Those pictures come
+          from TCGplayer's image servers like every card picture (see <em>Card pictures</em>),
+          so those servers then see which printings' pictures you asked for; the photo and the
+          text read from it are never sent. The picture, and small pictures of any card it could
           not read, are shown to you while you check the result and are then forgotten: they
           are not saved, and only the card lines you add are stored, exactly like typed ones.
         </p>
@@ -268,7 +270,7 @@
           browser loads that image from the address stored with the card - TCGplayer's
           own image servers - the same request the site itself makes when you browse. The
           printings offered after reading a photo load their pictures the same way, from the
-          product id in the built-in catalog. Nothing but the image address is sent. That is
+          product id in the built-in catalog, but only when you ask for them. Nothing but the image address is sent. That is
           the only host ever loaded from;
           a backup naming any other host renders &ldquo;No image&rdquo; instead.
         </p>
@@ -691,9 +693,10 @@
         </p>
         <p>
           0.8.0, 22 November 2026: photos are matched against a built-in copy of TCGplayer's card
-          catalog, and a card whose printing is not clear is shown as the likely printings'
-          pictures, loaded from TCGplayer's image servers (which see the printings offered).
-          Photos still never leave your computer.
+          catalog, and a card whose printing is not clear offers the likely printings to pick
+          from. Their pictures load from TCGplayer's image servers only when you ask (point at
+          or pick one, or press &ldquo;Show pictures&rdquo;); until then they show as set, number
+          and name. Photos still never leave your computer.
         </p>
       </section>
 
