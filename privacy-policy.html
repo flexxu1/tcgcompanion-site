@@ -250,14 +250,10 @@
           the materials used are property of Wizards of the Coast. &copy;Wizards of the Coast
           LLC. When the photo
           does not show which printing a card is, the most likely printings are shown for you to
-          pick from by their set, number and name, as text: no picture is loaded until you ask.
-          Pointing at or picking one printing loads that printing's picture, and the &ldquo;Show
-          pictures&rdquo; switch loads the pictures of all the printings offered. The switch is off
-          at first; once you turn it on it stays on, for later imports too, until you turn it off
-          (it is kept in your settings, and a backup file never turns it on). Those pictures come
-          from TCGplayer's image servers like every card picture (see <em>Card pictures</em>),
-          so those servers then see which printings' pictures you asked for; the photo and the
-          text read from it are never sent. The picture, and small pictures of any card it could
+          pick from, each with its picture, set, number and name. Those choice pictures are
+          loaded from TCGplayer's image server, as on any TCGplayer page (see <em>Card
+          pictures</em>), so that server sees which printings' pictures were shown; the photo
+          itself never leaves your computer, and neither does the text read from it. The picture, and small pictures of any card it could
           not read, are shown to you while you check the result and are then forgotten: they
           are not saved, and only the card lines you add are stored, exactly like typed ones.
         </p>
@@ -286,7 +282,7 @@
           printings offered after reading a photo, or for a pasted or imported card named without
           its set (a name with several printings is asked: &ldquo;Which printing is this?&rdquo;), load
           their pictures the same way, from the
-          product id in the built-in catalog, but only when you ask for them. Nothing but the image address is sent. That is
+          product id in the built-in catalog, as soon as the choices are shown, as on any TCGplayer page. Nothing but the image address is sent. That is
           the only host ever loaded from;
           a backup naming any other host renders &ldquo;No image&rdquo; instead.
         </p>
@@ -418,7 +414,7 @@
         <p>
           Also stored: your list names, whether each list is a deck or a collection,
           an optional per-list spend budget, and extension settings
-          (junk-term filter, seller preferences, the lowest-price seller guard, price-history retention, the backup reminder, your last export choice, whether the Import dialog's &ldquo;Show pictures&rdquo; switch is on, each selling list's asking price as a percentage of market, a vendor list's offer as a percentage of the listed price or of market, theme, dashboard defaults, and the Daily prices settings described above). On a selling list a card can also carry your own asking price for that list.
+          (junk-term filter, seller preferences, the lowest-price seller guard, price-history retention, the backup reminder, your last export choice, each selling list's asking price as a percentage of market, a vendor list's offer as a percentage of the listed price or of market, theme, dashboard defaults, and the Daily prices settings described above). On a selling list a card can also carry your own asking price for that list.
         </p>
         <p>
           <strong>Housekeeping records.</strong> Alongside the above the
@@ -710,20 +706,18 @@
         <p>
           0.8.0, 22 November 2026: photos are matched against a built-in copy of TCGplayer's card
           catalog, and a card whose printing is not clear offers the likely printings to pick
-          from. Their pictures load from TCGplayer's image servers only when you ask (point at
-          or pick one, or press &ldquo;Show pictures&rdquo;); until then they show as set, number
-          and name. Photos still never leave your computer.
+          from. Photos still never leave your computer.
         </p>
         <p>
           0.8.0, 22 November 2026: a pasted or imported card named without its set, when it has
           several printings, is asked (&ldquo;Which printing is this?&rdquo;) instead of saved as a
-          guessed printing. Its printings show as text; pictures load only as above.
+          guessed printing.
         </p>
         <p>
-          0.8.0, 22 November 2026: &ldquo;Show pictures&rdquo; in the Import dialog is a switch: one
-          click shows the pictures of every printing offered, and it is remembered for later
-          imports until you turn it off. It is off at first. Photos still never leave your
-          computer.
+          0.8.0, 22 November 2026: the Import dialog's choices (&ldquo;Which card is this?&rdquo;,
+          &ldquo;Which printing is this?&rdquo;) always show their pictures, loaded from TCGplayer's
+          image server as on any TCGplayer page; there is no &ldquo;Show pictures&rdquo; switch any
+          more, and its old setting is dropped. The photo itself never leaves your computer.
         </p>
         <p>
           0.8.0, 22 November 2026: photos are also matched by how the card looks, against small
