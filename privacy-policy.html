@@ -238,7 +238,17 @@
           card's name is checked against the same built-in card-name list the .ydk import uses,
           and every card's text against a built-in copy of TCGplayer's card catalog for its game
           (Pokemon, Magic: The Gathering, Yu-Gi-Oh!, Disney Lorcana, One Piece; nothing is looked
-          up online). When the photo
+          up online). How the card <strong>looks</strong> is compared too, on your computer: the
+          extension ships small fingerprints of each printing's picture (about 16 bytes each, no
+          images), made in advance from public card databases' images &ndash; Scryfall (Magic),
+          Lorcast (Disney Lorcana), TCGdex (Pokemon, MIT licence), YGOPRODeck (Yu-Gi-Oh!) and
+          OPTCG API (One Piece), never TCGplayer's. A fingerprint of the card in your photo is
+          made on your computer and compared with them; nothing is downloaded for this and the
+          photo never leaves your computer. TCGPartner is not affiliated with or endorsed by
+          those databases or the games' publishers. TCGPartner is unofficial Fan Content
+          permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of
+          the materials used are property of Wizards of the Coast. &copy;Wizards of the Coast
+          LLC. When the photo
           does not show which printing a card is, the most likely printings are shown for you to
           pick from by their set, number and name, as text: no picture is loaded until you ask.
           Pointing at or picking one printing loads that printing's picture, and &ldquo;Show
@@ -706,6 +716,12 @@
           0.8.0, 22 November 2026: a pasted or imported card named without its set, when it has
           several printings, is asked (&ldquo;Which printing is this?&rdquo;) instead of saved as a
           guessed printing. Its printings show as text; pictures load only as above.
+        </p>
+        <p>
+          0.8.0, 22 November 2026: photos are also matched by how the card looks, against small
+          fingerprints built into the extension (no images), made from public card databases'
+          images (Scryfall, Lorcast, TCGdex, YGOPRODeck, OPTCG API), not TCGplayer's. Nothing is
+          downloaded for this, and photos still never leave your computer.
         </p>
       </section>
 
