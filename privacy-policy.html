@@ -125,7 +125,7 @@
         <p>
           The extension makes two kinds of network request of its own. The first is stated
           plainly under <em>Card pictures</em> below: showing a card's picture (a saved card's,
-          or a printing offered after reading a photo) loads that image from tcgplayer.com. (The <em>Try Google</em> link below is not a request by the
+          or a printing offered after reading a photo or for a pasted or imported card name) loads that image from tcgplayer.com. (The <em>Try Google</em> link below is not a request by the
           extension: it is a search your browser opens only when you click it.) The second is the
           daily price update, <em>Daily prices</em> (below): on by default from version 0.8.0 unless
           you turn it off in Options (in version 0.7.0, off until you turned it on). It never
@@ -271,7 +271,9 @@
           <strong>Card pictures.</strong> When the dashboard shows a card's picture, your
           browser loads that image from the address stored with the card - TCGplayer's
           own image servers - the same request the site itself makes when you browse. The
-          printings offered after reading a photo load their pictures the same way, from the
+          printings offered after reading a photo, or for a pasted or imported card named without
+          its set (a name with several printings is asked: &ldquo;Which printing is this?&rdquo;), load
+          their pictures the same way, from the
           product id in the built-in catalog, but only when you ask for them. Nothing but the image address is sent. That is
           the only host ever loaded from;
           a backup naming any other host renders &ldquo;No image&rdquo; instead.
@@ -699,6 +701,11 @@
           from. Their pictures load from TCGplayer's image servers only when you ask (point at
           or pick one, or press &ldquo;Show pictures&rdquo;); until then they show as set, number
           and name. Photos still never leave your computer.
+        </p>
+        <p>
+          0.8.0, 22 November 2026: a pasted or imported card named without its set, when it has
+          several printings, is asked (&ldquo;Which printing is this?&rdquo;) instead of saved as a
+          guessed printing. Its printings show as text; pictures load only as above.
         </p>
       </section>
 
