@@ -113,7 +113,7 @@
           address, not how the extension handles your data.
         </p>
         <p class="stamp">
-          <strong>Effective date:</strong> 22 November 2026 · Applies to TCGPartner
+          <strong>Effective date:</strong> 23 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
           Last verified against the extension source on 23 November 2026 (UTC; version 0.8.0).
@@ -446,6 +446,13 @@
           extension can find its own records and avoid repeating work.
         </p>
         <p>
+          <strong>Sealed product outlines.</strong> For a sealed product drawn by the built-in
+          model (see <em>Sealed product pictures</em>), the outline it found - a few hundred bytes
+          of shape, no pixels - keyed by the picture's address, in the extension's own IndexedDB
+          database (<code>tcgpartner-sealed-outlines</code>). Not in backups; erasing everything in
+          Options deletes it.
+        </p>
+        <p>
           The extension does not ask for and does not store your name, email address,
           postal address, phone number, payment details, or TCGplayer account
           credentials.
@@ -734,6 +741,13 @@
           fingerprints built into the extension (no images), made from public card databases'
           images (Scryfall, Lorcast, TCGdex, YGOPRODeck, OPTCG API), not TCGplayer's. Nothing is
           downloaded for this, and photos still never leave your computer.
+        </p>
+        <p>
+          0.8.0, 23 November 2026: sealed product pictures are cut out of their backdrop on this
+          computer, by outlines shipped with the extension or by a small built-in model; nothing is
+          sent for it. The outlines the model finds are kept locally
+          (<code>tcgpartner-sealed-outlines</code>, see <em>What is stored locally</em>), not in
+          backups, and erasing everything deletes them.
         </p>
       </section>
 
