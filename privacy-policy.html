@@ -244,7 +244,11 @@
           Lorcast (Disney Lorcana), TCGdex (Pokemon, MIT licence), YGOPRODeck (Yu-Gi-Oh!) and
           OPTCG API (One Piece), never TCGplayer's. A fingerprint of the card in your photo is
           made on your computer and compared with them; nothing is downloaded for this and the
-          photo never leaves your computer. TCGPartner is not affiliated with or endorsed by
+          photo never leaves your computer. A small built-in image model (run by the same ONNX
+          Runtime, from the extension's own files) also turns the card in your photo into a short
+          list of numbers, compared on your computer with lists made in advance from the same
+          databases' images (about 32 bytes each, no images); the model runs only when you give it
+          a photo, nothing is sent for it and nothing from it is stored. TCGPartner is not affiliated with or endorsed by
           those databases or the games' publishers. TCGPartner is unofficial Fan Content
           permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of
           the materials used are property of Wizards of the Coast. &copy;Wizards of the Coast
@@ -748,6 +752,12 @@
           sent for it. The outlines the model finds are kept locally
           (<code>tcgpartner-sealed-outlines</code>, see <em>What is stored locally</em>), not in
           backups, and erasing everything deletes them.
+        </p>
+        <p>
+          0.8.0, 23 November 2026: photos are also matched by a small built-in image model run on
+          this computer, against numbers made in advance from the same public card databases'
+          images (no images, not TCGplayer's). Nothing is downloaded or sent for it, nothing from
+          it is stored, and photos still never leave your computer.
         </p>
       </section>
 
