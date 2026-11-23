@@ -286,6 +286,16 @@
           the only host ever loaded from;
           a backup naming any other host renders &ldquo;No image&rdquo; instead.
         </p>
+        <p>
+          <strong>Sealed product pictures.</strong> A box, pack or tin is cut out of its
+          picture's backdrop on your computer: by an outline shipped with the extension for that
+          product, or else by a small built-in model (TensorFlow.js, loaded from the extension's
+          own files) run on the picture the dashboard already shows. Nothing is sent for this. So
+          the model runs only once per picture, the outline it finds (a few hundred bytes of
+          shape, no pixels) is kept in the extension's own IndexedDB database
+          (<code>tcgpartner-sealed-outlines</code>) under that picture's address. It is not in
+          backups, and Erase everything in Options deletes it.
+        </p>
       </section>
 
       <section>
