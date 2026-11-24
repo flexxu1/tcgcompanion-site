@@ -135,7 +135,7 @@
           (<code>fetch</code>), in <code>background/price-db-transport.js</code>, used only by Daily
           prices and able to make only the two requests described below; there is no
           <code>XMLHttpRequest</code>, <code>WebSocket</code>,
-          <code>EventSource</code> or <code>sendBeacon</code> call anywhere in the extension's own code.
+          <code>EventSource</code>, or <code>sendBeacon</code> call anywhere in the extension's own code.
           The one other piece of code that has a file loader is the photo reader's built-in ONNX Runtime
           (see <em>Reading a photo or screenshot</em>), which uses it only to read its own files
           from the extension. The extension's content security policy
@@ -148,12 +148,12 @@
         </p>
         <p>
           Deck import works from what you type. When you paste a card list into <em>Import</em>, the
-          card names, copies, printing numbers and set codes you pasted are saved exactly
+          card names, copies, printing numbers, and set codes you pasted are saved exactly
           as typed, into a deck on your machine; nothing is looked up anywhere. Cards
           added this way store three extra fields: where the record came from
           (<code>importedFrom</code>), the printing number you typed
           (<code>importNumber</code>, with the set total after a slash when you typed one,
-          such as &ldquo;010/086&rdquo;) and the set code you typed
+          such as &ldquo;010/086&rdquo;), and the set code you typed
           (<code>importSetHint</code>), each only when present. These are identity only -
           an imported card carries no price and no picture until you open its TCGplayer
           page yourself, exactly like any other unpriced card. To tell which imported card
@@ -163,7 +163,7 @@
           both are used for that comparison, and to point out an imported card that this
           page is a variant of (&ldquo;pick the variant&rdquo;), and neither is stored. Before version 0.4.0
           (2026-09-12) deck import sent the typed names to a third-party card database to
-          offer a printing picker; that call, its host permission and its stored fields
+          offer a printing picker; that call, its host permission, and its stored fields
           are gone, and records written by earlier versions are rewritten to the typed
           shape on first run.
         </p>
@@ -172,14 +172,14 @@
           needs the name spelled exactly, so an imported card that it misses gets a second
           link, on the dashboard and on a TCGplayer search page opened to resolve that card.
           <strong>Only if you click it</strong>, your browser opens a Google search in a new
-          tab: <code>https://www.google.com/search</code> with the card name, set code and
+          tab: <code>https://www.google.com/search</code> with the card name, set code, and
           number you typed plus the word &ldquo;tcgplayer&rdquo;. Google receives that text
           the way it receives any search you type yourself, under Google's own privacy
-          policy. The extension sends nothing to Google itself, has no access to google.com
+          policy. The extension sends nothing to Google itself, has no access to google.com,
           and runs nothing there. So that <em>Use this card</em> can appear on the TCGplayer
           page you open from the results, the click - and a click on that card's
           <em>Find on TCGplayer</em> link - also remembers which imported card you
-          were choosing (its storage key, the name you typed and the time) in
+          were choosing (its storage key, the name you typed, and the time) in
           <code>chrome.storage.session</code>, the browser's temporary extension storage. It
           is cleared when you use it, when you dismiss it, after 30 minutes, or when the
           browser closes, and it never leaves your browser.
@@ -199,9 +199,9 @@
         </p>
         <p>
           <strong>Importing a list file.</strong> Import also reads a .csv, .tsv, .xlsx or .xls (Excel),
-          .ods (OpenDocument) or .txt list and MTGO (.dek), Cockatrice (.cod) or Yu-Gi-Oh! (.ydk) deck files: a
+          .ods (OpenDocument), or .txt list and MTGO (.dek), Cockatrice (.cod), or Yu-Gi-Oh! (.ydk) deck files: a
           TCGPartner (or, from before the rename, TCGCompanion) price list or price sheet, a TCGplayer app collection or Seller Portal export, a
-          ManaBox, Collectr, Moxfield or Deckbox CSV, a spreadsheet, a deck file, or a plain
+          ManaBox, Collectr, Moxfield, or Deckbox CSV, a spreadsheet, a deck file, or a plain
           card list. You can pick the file or drop it on the import panel. The file is read
           in your browser (an Excel or OpenDocument file is unpacked there too, with no library
           and no upload; a .ydk file names cards only by passcode, and their names come from a
@@ -211,14 +211,14 @@
           the exact copy's SKU (the seller export's &ldquo;TCGplayer Id&rdquo;, the app
           export's &ldquo;SKU&rdquo;), that number is kept as <code>importSkuId</code> so the
           card's price list can list it again; it is dropped if you change the card's
-          condition, printing or language. A price in the file is not
+          condition, printing, or language. A price in the file is not
           stored as the card's price; it is added to the card's note (&ldquo;Price on imported
           list: ...&rdquo;), as is a printing the extension does not track, and a language that
           would otherwise relabel a card you already saved (&ldquo;Language on imported list:
           ...&rdquo;). The one exception is
           a TCGplayer Seller Portal pricing export: its <code>TCG Market Price</code> column is
           TCGplayer's market price, so it becomes the market price
-          (<code>currentMarketPrice</code>, <code>marketObservedAt</code> and a price-history
+          (<code>currentMarketPrice</code>, <code>marketObservedAt</code>, and a price-history
           entry) of each saved card it matches, marked with <code>lastPriceSource</code>
           <code>import</code> and dated when the file was exported (from its file name, or else
           the file's own modified time). A file or pasted text with no such date never
@@ -229,10 +229,10 @@
         <p>
           <strong>Reading a photo or screenshot.</strong> Photos are read on this computer and
           never uploaded. The import panel's <em>Add photos</em> reads a photo or screenshot of
-          cards (one card, a binder page or several cards on a table) or of a card list (picked,
-          pasted or dropped on the panel). The picture is read <strong>on your computer</strong>: the text reader (PaddleOCR models run
+          cards (one card, a binder page, or several cards on a table) or of a card list (picked,
+          pasted, or dropped on the panel). The picture is read <strong>on your computer</strong>: the text reader (PaddleOCR models run
           by ONNX Runtime, both built into the extension) loads from the extension's own files
-          only when you give it a picture (picked, pasted or dropped), and neither the picture
+          only when you give it a picture (picked, pasted, or dropped), and neither the picture
           nor the text read from it is sent anywhere. The text goes into the import box, where you check and correct it
           before anything is added; words the reader was unsure of are marked. A Yu-Gi-Oh!
           card's name is checked against the same built-in card-name list the .ydk import uses,
@@ -248,13 +248,13 @@
           Runtime, from the extension's own files) also turns the card in your photo into a short
           list of numbers, compared on your computer with lists made in advance from the same
           databases' images (about 32 bytes each, no images); the model runs only when you give it
-          a photo, nothing is sent for it and nothing from it is stored. TCGPartner is not affiliated with or endorsed by
+          a photo, nothing is sent for it, and nothing from it is stored. TCGPartner is not affiliated with or endorsed by
           those databases or the games' publishers. TCGPartner is unofficial Fan Content
           permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of
           the materials used are property of Wizards of the Coast. &copy;Wizards of the Coast
           LLC. When the photo
           does not show which printing a card is, the most likely printings are shown for you to
-          pick from, each with its picture, set, number and name. Those choice pictures are
+          pick from, each with its picture, set, number, and name. Those choice pictures are
           loaded from TCGplayer's image server, as on any TCGplayer page (see <em>Card
           pictures</em>), so that server sees which printings' pictures were shown; the photo
           itself never leaves your computer, and neither does the text read from it. The picture, and small pictures of any card it could
@@ -265,11 +265,11 @@
           <strong>Price lists</strong> export one list, or all your cards, as a spreadsheet (.csv)
           or a plain-text file (.txt). The spreadsheet has each card's quantity, name, set, card
           number, printing, condition, language, price (marked when it is an estimate),
-          TCGplayer product id and SKU id and, only when a card has one, your asking price, a
+          TCGplayer product id and SKU id, and, only when a card has one, your asking price, a
           seller's price and an offer from an imported list, your note, whether you collected it
-          (not on a selling list) and, for all your cards or Likes, the lists it is in. The text
+          (not on a selling list), and, for all your cards or Likes, the lists it is in. The text
           file has one line per card (quantity, name, set and number, condition and printing,
-          price and your asking price) under one line naming the list, and a last line saying the
+          price, and your asking price) under one line naming the list, and a last line saying the
           product uses TCGplayer data but is not endorsed by TCGplayer (it names TCGplayer as the
           source of the prices only when every price in the file was read on a TCGplayer page). It
           is a file your browser downloads. Every feature is free; nothing about
@@ -291,7 +291,7 @@
           a backup naming any other host renders &ldquo;No image&rdquo; instead.
         </p>
         <p>
-          <strong>Sealed product pictures.</strong> A box, pack or tin is cut out of its
+          <strong>Sealed product pictures.</strong> A box, pack, or tin is cut out of its
           picture's backdrop on your computer: by an outline shipped with the extension for that
           product, or else by a small built-in model (TensorFlow.js, loaded from the extension's
           own files) run on the picture the dashboard already shows. Nothing is sent for this. So
@@ -311,7 +311,7 @@
           price service and none of what follows happens in them. Updating from 0.6.0 or 0.7.0 to 0.8.0 turns them on, unless you turned them on and then off again in 0.7.0: that choice is kept. Someone whose update turns them on sees one line in the dashboard the first time they open it after the update: <em>Daily prices are now on. Turn off in Options.</em> It stays until they close it. Nothing is sent before that line has been shown.
         </p>
         <p>
-          Daily prices show TCGplayer's price for each saved card in its own condition, printing
+          Daily prices show TCGplayer's price for each saved card in its own condition, printing,
           and language without opening each card's page. Daily prices are <strong>on by
           default</strong>. This is what happens:
         </p>
@@ -321,8 +321,8 @@
             cards. When you open TCGPartner's menu on a card on TCGplayer, it also asks for that one
             card, so the menu can show the printings that card has. Each request sends TCGplayer
             product numbers and nothing else: no account, no cookie, no card names, conditions,
-            quantities, lists, prices or notes of yours, and nothing you typed. The service sees
-            those product numbers together with your IP address, the time and your browser's
+            quantities, lists, prices, or notes of yours, and nothing you typed. The service sees
+            those product numbers together with your IP address, the time, and your browser's
             standard headers, so it can tell which TCGplayer products you saved or looked at
             through the menu. It does not log or keep the product numbers with your IP address: to
             stop abuse it keeps only a count of today's lookups under a scrambled form of your IP
@@ -353,7 +353,7 @@
             numbers in the request, your IP address, the time, and your browser's standard headers
             (including the extension's own ID, sent by Chrome as the request's origin). The product
             numbers are used only to answer that request: they are not written to any log,
-            database or analytics, and the service's request logging is switched off. To stop abuse
+            database, or analytics, and the service's request logging is switched off. To stop abuse
             it counts how many product numbers were looked up from each IP address each day; the IP
             address is kept only as a one-way hash that changes every day, next to that count, and
             the count is deleted the next day. Cloudflare, which runs the service, handles each
@@ -389,7 +389,7 @@
           TCGPartner menu you open) with your IP address,
           uses them only to answer each request, and keeps neither, apart from the daily lookup
           count under a one-way hash of the IP address described above, deleted the next day.
-          Nothing is sold, rented or shared, and no information is shared with
+          Nothing is sold, rented, or shared, and no information is shared with
           <strong>third parties</strong>; Cloudflare runs the service as its host. The one way
           typed text can reach an outside site is a <em>Try Google</em> search that you choose to
           open (described above), which your browser sends to Google like any search you type
@@ -408,12 +408,12 @@
         <p>Collection data below is kept in <code>chrome.storage.local</code> on your device.</p>
         <p>For each card you save:</p>
         <ul>
-          <li>Card identity: name, set, the collector number its TCGplayer page prints, condition, printing, language, product and SKU ids, and whether it is a sealed product (a box, pack or tin, which has no condition).</li>
-          <li>Prices: current market and low price, the condition, printing and language
+          <li>Card identity: name, set, the collector number its TCGplayer page prints, condition, printing, language, product and SKU ids, and whether it is a sealed product (a box, pack, or tin, which has no condition).</li>
+          <li>Prices: current market and low price, the condition, printing, and language
             the low price was measured at, when that low price was last seen on a listing, when the market price was last read from a page, plus a bounded history of samples, each with a
-            timestamp, the activity that produced it and that same condition/printing/language;
-            the condition, printing and language the market price was read at; when a page you
-            opened had no listing at the card's condition, printing and language (which one, and
+            timestamp, the activity that produced it, and that same condition/printing/language;
+            the condition, printing, and language the market price was read at; when a page you
+            opened had no listing at the card's condition, printing, and language (which one, and
             when); and, for a card from an imported list, the price that list gave it and the
             list's date for it.</li>
           <li><strong>URLs</strong>: the TCGplayer product or listing address the card came
@@ -443,7 +443,7 @@
           existed, kept read-only; and, for the current browser session only,
           the id of the dashboard tab so it can be brought to the front rather
           than opened twice, the id of the buy list's tab so <em>Open next</em> opens the next card in that same tab, the one pending imported-card choice
-          described above - that card's storage key, the name you typed and the
+          described above - that card's storage key, the name you typed, and the
           time - a price check you started, described above, and which cards of a buy list you
           have opened or skipped, kept in the dashboard tab's own session storage until that tab closes, and the dashboard's Undo steps - the cards and lists an Undo would put back - so Undo still works after a reload (emptied by erasing everything in Options; all live in session storage and are gone when the browser
           closes; the pending choice also clears after 30 minutes, the price check after 60). None of it describes you; it exists so the
@@ -506,9 +506,9 @@
           default), TCGPartner's own price service receives the TCGplayer product numbers of your saved
           cards (and of a card whose TCGPartner menu you open) with your IP address, only to answer with their prices, and keeps neither, apart from a daily lookup
           count under a one-way hash of the IP address, deleted the next day (described above; no account,
-          list, card names, quantities, conditions or prices are sent). Beyond that and the card
+          list, card names, quantities, conditions, or prices are sent). Beyond that and the card
           pictures and searches you open, described above, nothing of yours leaves your device. It never uses or transfers it for
-          advertising of any kind, including personalised, re-targeted or
+          advertising of any kind, including personalised, re-targeted, or
           interest-based advertising, and never uses it to determine creditworthiness or
           for lending purposes. No human reads your data: with Daily prices off nothing reaches
           the developer, and with them on the price service only answers each request
@@ -542,7 +542,7 @@
           from a page you were looking at: nothing else runs on a schedule, nothing opens or
           reloads a page, and nothing is fetched from TCGplayer. With Daily prices off, a price in
           TCGPartner is only as fresh as your last visit to that card’s page. Every price says what
-          it is - <em>TCGplayer price</em>, <em>Lowest listing</em> or <em>Estimate</em> - and how
+          it is - <em>TCGplayer price</em>, <em>Lowest listing</em>, or <em>Estimate</em> - and how
           old it is once it is more than 3 days old.
         </p>
         <p>
@@ -552,11 +552,11 @@
           TCGplayer’s API terms describe as something browser add-ons must not do. It was
           removed outright, together with the <code>alarms</code> permission and its
           settings; an upgraded profile has them deleted on first run. The extension does
-          not spoof identity, solve CAPTCHAs or bypass challenges.
+          not spoof identity, solve CAPTCHAs, or bypass challenges.
         </p>
         <p>
-          Daily prices are different in kind, and still a timer: they never read, open or request a
-          TCGplayer page, account or API, and no page address is sent: only the product numbers of cards you saved, and of a card whose TCGPartner menu you open (that one number does tell the service which card someone at your IP address looked at; it keeps no record of it, see above). Once a day
+          Daily prices are different in kind, and still a timer: they never read, open, or request a
+          TCGplayer page, account, or API, and no page address is sent: only the product numbers of cards you saved, and of a card whose TCGPartner menu you open (that one number does tell the service which card someone at your IP address looked at; it keeps no record of it, see above). Once a day
           they ask TCGPartner's price service for the prices of the product numbers you saved; the
           service compiles TCGplayer market prices once a day from public price data. They are on by
           default from version 0.8.0 (in 0.7.0 they ran only after you turned them on and read what
@@ -565,7 +565,7 @@
       </section>
 
       <section>
-        <h2>Your control, retention and deletion</h2>
+        <h2>Your control, retention, and deletion</h2>
         <p>
           Because the data is on your machine, you hold it directly. You can view and
           edit every saved card and list in the dashboard, remove cards individually or
@@ -574,7 +574,7 @@
           Turning Daily prices off deletes them at once; the price service keeps only
           that day's lookup count under a one-way hash of the IP address, which deletes itself
           the next day (it cannot be looked up by name or account, so there is nothing to request). Options also has
-          <em>Erase everything</em>, which deletes every saved card, list and setting on this
+          <em>Erase everything</em>, which deletes every saved card, list, and setting on this
           computer after asking you to confirm.
         </p>
         <p>
@@ -662,11 +662,11 @@
           processor; requests may be handled in Cloudflare data centres outside your country,
           including the United States, under the safeguards of Cloudflare's data processing
           addendum: Cloudflare's certification under the EU-U.S. Data Privacy Framework, its
-          UK Extension and the Swiss-U.S. Data Privacy Framework and, where those do not
+          UK Extension, and the Swiss-U.S. Data Privacy Framework and, where those do not
           apply, the EU standard contractual clauses with the UK International Data Transfer
           Addendum. The
           rights those laws give you over the data on your computer - to access, correct,
-          export and erase it - are exercised directly, in the dashboard and through the
+          export, and erase it - are exercised directly, in the dashboard and through the
           export and uninstall steps above. For the price service, what is stored is not
           your name or account but pseudonymous: the daily count sits under a one-way hash of the IP address taken
           together with that day's date (and a secret), and it is gone the next day.
@@ -706,7 +706,7 @@
         <p>
           0.8.0: Daily prices are on by default; the one-card lookup when you open TCGPartner's
           menu on TCGplayer was added. Price labels now read <em>TCGplayer price</em>,
-          <em>Lowest listing</em> and <em>Estimate</em>; exported price lists have fixed columns;
+          <em>Lowest listing</em>, and <em>Estimate</em>; exported price lists have fixed columns;
           the setting that hid the controls on TCGplayer pages was removed. Users updating from an earlier version are told in the dashboard (<em>Daily prices are now on. Turn off in Options.</em>) and find this change here and in the store listing; Daily prices can be turned off in Options at any time.
         </p>
         <p>
@@ -773,7 +773,7 @@
         <p>
           The Contact us form sends nothing itself. It builds a message addressed to
           help.tcgpartner@gmail.com from what you type (your email address, the request
-          type and your message), plus the extension version and your browser's user-agent
+          type, and your message), plus the extension version and your browser's user-agent
           string, and hands it to your own email: your mail app, or Gmail's compose page in
           a new tab. Nothing leaves your device until you press send there, the extension
           does not save what you typed, and the developer receives the message only if you
@@ -791,7 +791,7 @@
         </p>
       </section>
 
-      <section><h2>Dashboard display preferences and controls</h2><p>The dashboard keeps <code>tcgc-card-size</code> and <code>tcgc-quick-guide-seen-v1</code> in its extension-origin <code>localStorage</code>: card size and whether the quick guide was dismissed. These display preferences are not included in backups. Card housekeeping may include <code>autoParkedInLikes</code>, so Undo can distinguish automatic fallback membership from an explicit Like. Our own star, list picker, condition and printing choices and Collected controls appear on TCGplayer search results and product pages (always from version 0.8.0; to leave TCGplayer pages untouched, turn TCGPartner off in Chrome's extensions page). Seller storefront pages are not supported.</p></section>
+      <section><h2>Dashboard display preferences and controls</h2><p>The dashboard keeps <code>tcgc-card-size</code> and <code>tcgc-quick-guide-seen-v1</code> in its extension-origin <code>localStorage</code>: card size and whether the quick guide was dismissed. These display preferences are not included in backups. Card housekeeping may include <code>autoParkedInLikes</code>, so Undo can distinguish automatic fallback membership from an explicit Like. Our own star, list picker, condition and printing choices, and Collected controls appear on TCGplayer search results and product pages (always from version 0.8.0; to leave TCGplayer pages untouched, turn TCGPartner off in Chrome's extensions page). Seller storefront pages are not supported.</p></section>
 
       <footer>TCGPartner - local-first, no account, no tracking.</footer>
 </main>
