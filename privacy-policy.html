@@ -104,7 +104,7 @@
           account and no sync. Everything it records stays on your machine until you delete it or
           export it yourself. TCGPartner keeps your cards and lists in your browser. To show
           current prices, it asks TCGPartner's own price service once a day for the prices of the cards you saved, and of a card whose TCGPartner menu you open on TCGplayer. Apart from the card pictures it shows, which come from TCGplayer, that is the only thing it sends about your cards, it is on by default from version
-          0.8.0, and you can turn it off in Options at any time. When you import a list from a card
+          0.8.0, and you can turn it off in Options at any time. When you import a list, or a photo of cards, from a card
           game whose cards are not built in, it also downloads that game's card list from the same
           service, sending the game's number (<em>Card lists</em>, also on by default and turned off in
           Options; nothing is sent before you import such a list, and the Import dialog says so). What it sends, to whom, and what is and is not logged is described in full below.
@@ -247,12 +247,20 @@
           before anything is added; words the reader was unsure of are marked. A Yu-Gi-Oh!
           card's name is checked against the same built-in card-name list the .ydk import uses,
           and every card's text against a built-in copy of TCGplayer's card catalog for its game
-          (Pokemon, Magic: The Gathering, Yu-Gi-Oh!, Disney Lorcana, One Piece; nothing is looked
-          up online). How the card <strong>looks</strong> is compared too, on your computer: the
+          (Pokemon, Magic: The Gathering, Yu-Gi-Oh!, Disney Lorcana, and One Piece; nothing is looked
+          up online). A card of Flesh and Blood, hololive OFFICIAL CARD GAME, Digimon, Star Wars:
+          Unlimited, Dragon Ball Super: Fusion World, Union Arena, Weiss Schwarz, or Riftbound is
+          matched, by its printed card code and name, against that game's card list (see <em>Card
+          lists</em>): with Card lists on, the list is downloaded once from TCGPartner's price
+          service when a photo has a card of that game, sending only the game's number, exactly as
+          for an imported file; the photo and the text read from it are not sent. With Card lists
+          off, those cards are read by their text alone. How the card <strong>looks</strong> is compared too, on your computer: the
           extension ships small fingerprints of each printing's picture (about 16 bytes each, no
           images), made in advance from public card databases' images &ndash; Scryfall (Magic),
-          Lorcast (Disney Lorcana), TCGdex (Pokemon, MIT licence), YGOPRODeck (Yu-Gi-Oh!) and
-          OPTCG API (One Piece), never TCGplayer's. A fingerprint of the card in your photo is
+          Lorcast (Disney Lorcana), TCGdex (Pokemon, MIT licence), YGOPRODeck (Yu-Gi-Oh!),
+          OPTCG API (One Piece), Legend Story Studios' own card images (Flesh and Blood, matched to
+          TCGplayer products with the-fab-cube's card data), and hocg-fan-sim-assets (hololive
+          OFFICIAL CARD GAME), never TCGplayer's. A fingerprint of the card in your photo is
           made on your computer and compared with them; nothing is downloaded for this and the
           photo never leaves your computer. A small built-in image model (run by the same ONNX
           Runtime, from the extension's own files) also turns the card in your photo into a short
@@ -262,7 +270,10 @@
           those databases or the games' publishers. TCGPartner is unofficial Fan Content
           permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of
           the materials used are property of Wizards of the Coast. &copy;Wizards of the Coast
-          LLC. When the photo
+          LLC. TCGPartner is in no way affiliated with Legend Story Studios. Legend Story
+          Studios&reg;, Flesh and Blood&trade;, and set names are trademarks of Legend Story Studios.
+          Flesh and Blood characters, cards, logos, and art are property of Legend Story Studios.
+          &copy; Legend Story Studios. When the photo
           does not show which printing a card is, the most likely printings are shown for you to
           pick from, each with its picture, set, number, and name. Those choice pictures are
           loaded from TCGplayer's image server, as on any TCGplayer page (see <em>Card
@@ -396,8 +407,9 @@
           English and Japanese, Yu-Gi-Oh!, One Piece, and Lorcana), which match a pasted or imported
           list on this computer. Every other card game TCGplayer sells has a list on TCGPartner's
           own price service, the same service as Daily prices. A game's list is downloaded only
-          when you import a file or paste a list that has cards the shipped lists do not match, and
-          only once: it is kept on this computer and downloaded again only when the service has a
+          when you import a file or paste a list that has cards the shipped lists do not match, or
+          read a photo with a card of one of the eight photo games matched against a list (see
+          <em>Reading a photo or screenshot</em>), and only once: it is kept on this computer and downloaded again only when the service has a
           newer version of it. A list is the game's card names, set names and codes, card numbers,
           printings, and TCGplayer product numbers, compiled from TCGplayer's public catalog; no
           prices.
@@ -421,8 +433,8 @@
             public catalog data, not your data: they are not in backups, and turning Card lists off
             (or erasing everything in Options) deletes them. Whether you turned Card lists off is
             stored with your other settings; a backup never changes it.</li>
-          <li><strong>When</strong>: only during an import you start, and only when it has cards the
-            built-in lists do not match; the Import dialog says, above every import, that another
+          <li><strong>When</strong>: only during an import you start (a file, a pasted list, or a
+            photo), and only when it has cards the built-in lists do not match; the Import dialog says, above every import, that another
             game's list is downloaded from TCGPartner when needed. Someone updating from an earlier
             version sends nothing for Card lists until they import such a list.</li>
           <li><strong>To turn it off</strong>: Options, Card lists. Nothing is then asked for card
@@ -849,6 +861,16 @@
           your IP address; see <em>Card lists</em>). Nothing is sent before you import such a list,
           and the Import dialog says so above every import. On by default; Options turns it off and
           deletes the downloaded lists.
+        </p>
+        <p>
+          0.8.0, 25 November 2026 (later again): photos of Flesh and Blood, hololive OFFICIAL CARD
+          GAME, Digimon, Star Wars: Unlimited, Dragon Ball Super: Fusion World, Union Arena, Weiss
+          Schwarz, and Riftbound cards are read. Their printed code and name are matched against the
+          game's card list, which a photo of such a card now downloads like an import does (Card lists
+          on; only the game's number and list version are sent, never the photo or its text). The
+          built-in card-look fingerprints and model lists now also cover Flesh and Blood (from Legend
+          Story Studios' own card images) and hololive (from hocg-fan-sim-assets); no images are
+          included.
         </p>
       </section>
 
