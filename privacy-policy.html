@@ -288,9 +288,11 @@
           number, printing, condition, language, price (marked when it is an estimate),
           TCGplayer product id and SKU id, and, only when a card has one, your asking price, a
           seller's price and an offer from an imported list, your note, whether you collected it
-          (not on a selling list), and, for all your cards or Likes, the lists it is in. The text
+          (not on a selling list), and, for all your cards or Likes, the lists it is in, then a
+          link to the card's TCGplayer product page (blank for a card not matched to one). The text
           file has one line per card (quantity, name, set and number, condition and printing,
-          price, and your asking price) under one line naming the list, and a last line saying the
+          price, and your asking price), each followed by the same link on its own line (or a line
+          saying the card has none), under one line naming the list, and a last line saying the
           product uses TCGplayer data but is not endorsed by TCGplayer (it names TCGplayer as the
           source of the prices only when every price in the file was read on a TCGplayer page). It
           is a file your browser downloads. Every feature is free; nothing about
@@ -871,6 +873,14 @@
           built-in card-look fingerprints and model lists now also cover Flesh and Blood (from Legend
           Story Studios' own card images) and hololive (from hocg-fan-sim-assets); no images are
           included.
+        </p>
+        <p>
+          0.8.0, 25 November 2026 (links): exported price lists link each card to its TCGplayer
+          product page, opened at the card's condition and printing, so whoever you send the file to
+          can check the card: a "TCGplayer Link" column in the spreadsheet, and a link under each card
+          in the text file. The link holds only the product id, condition, printing, and language
+          already in the file; a card not matched to a TCGplayer product gets none. Nothing is sent
+          when you export.
         </p>
       </section>
 
