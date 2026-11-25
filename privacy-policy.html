@@ -29,7 +29,8 @@
         * International users         -> GDPR / UK GDPR (2026-09-12): the store is worldwide
                                          and those laws have no size threshold, so the page
                                          states the true position (no processing by the
-                                         developer with Daily prices off; for Daily prices,
+                                         developer with Daily prices and Card lists off; for Daily prices
+                                         and Card lists (2026-11-25, same service, same basis),
                                          on by default since 0.8.0, the developer's own
                                          service processes IP addresses and product numbers:
                                          controller, processor, purpose, basis, transfers and
@@ -102,9 +103,11 @@
           TCGPartner is a Chrome extension that keeps your data on your computer. It has no
           account and no sync. Everything it records stays on your machine until you delete it or
           export it yourself. TCGPartner keeps your cards and lists in your browser. To show
-          current prices, it asks TCGPartner's own price service once a day for the prices of the cards you saved, and of a card whose TCGPartner menu you open on TCGplayer. Apart from the card pictures it shows, which come from TCGplayer, that is the only thing it sends, it is on by default from version
-          0.8.0, and you can turn it off in Options at any time. What it sends, to whom, and what
-          is and is not logged is described in full below.
+          current prices, it asks TCGPartner's own price service once a day for the prices of the cards you saved, and of a card whose TCGPartner menu you open on TCGplayer. Apart from the card pictures it shows, which come from TCGplayer, that is the only thing it sends about your cards, it is on by default from version
+          0.8.0, and you can turn it off in Options at any time. When you import a list from a card
+          game whose cards are not built in, it also downloads that game's card list from the same
+          service, sending the game's number (<em>Card lists</em>, also on by default and turned off in
+          Options; nothing is sent before you import such a list, and the Import dialog says so). What it sends, to whom, and what is and is not logged is described in full below.
         </p>
         <p class="lede">
           TCGPartner is an independent extension and is not affiliated with, endorsed
@@ -123,7 +126,9 @@
       <section class="callout">
         <h2>Network activity: the daily price update</h2>
         <p>
-          The extension makes two kinds of network request of its own. The first is stated
+          The extension makes three kinds of network request of its own: card pictures, Daily
+          prices, and Card lists (the last two to TCGPartner's own price service; Card lists are
+          described in their own section below). The first is stated
           plainly under <em>Card pictures</em> below: showing a card's picture (a saved card's,
           or a printing offered after reading a photo or for a pasted or imported card name) loads that image from tcgplayer.com. (The <em>Try Google</em> link below is not a request by the
           extension: it is a search your browser opens only when you click it.) The second is the
@@ -133,7 +138,8 @@
           nothing else of yours is sent to the developer, and there is no cloud sync, analytics, advertising, telemetry, or
           crash reporting. The extension's own code holds exactly one network call
           (<code>fetch</code>), in <code>background/price-db-transport.js</code>, used only by Daily
-          prices and able to make only the two requests described below; there is no
+          prices and Card lists and able to make only the requests described below (two for
+          Daily prices, two for Card lists, all to TCGPartner's price service); there is no
           <code>XMLHttpRequest</code>, <code>WebSocket</code>,
           <code>EventSource</code>, or <code>sendBeacon</code> call anywhere in the extension's own code.
           The one other piece of code that has a file loader is the photo reader's built-in ONNX Runtime
@@ -384,15 +390,60 @@
       </section>
 
       <section>
+        <h2>Card lists (on by default, from 25 November 2026)</h2>
+        <p>
+          The extension ships the card lists of six games (Magic: The Gathering, Pok&eacute;mon in
+          English and Japanese, Yu-Gi-Oh!, One Piece, and Lorcana), which match a pasted or imported
+          list on this computer. Every other card game TCGplayer sells has a list on TCGPartner's
+          own price service, the same service as Daily prices. A game's list is downloaded only
+          when you import a file or paste a list that has cards the shipped lists do not match, and
+          only once: it is kept on this computer and downloaded again only when the service has a
+          newer version of it. A list is the game's card names, set names and codes, card numbers,
+          printings, and TCGplayer product numbers, compiled from TCGplayer's public catalog; no
+          prices.
+        </p>
+        <ul>
+          <li><strong>What is sent</strong>: <code>GET /v1/cards</code> (at most about every six
+            hours, and only during such an import: which games have a list, each list's version, and
+            each game's set names and codes) and <code>GET /v1/cards/&lt;game&gt;/&lt;version&gt;</code>
+            (a game's number, such as 79, and its list's version). Nothing about your cards, your
+            list, or the lines you pasted is sent: the matching happens on this computer, after the
+            download. No cookies or credentials, no referrer; a redirected request is refused.</li>
+          <li><strong>What the service sees, and what is kept</strong>: the game number and version
+            in the address, your IP address, the time, and your browser's standard headers
+            (including the extension's own ID). They are used only to answer that request and are
+            not written to any log or database; to stop abuse each request is counted against a
+            per-minute limit under the same one-way hash of the IP address as Daily prices, which
+            Cloudflare's rate limiter holds for about a minute. No daily count is kept for card
+            lists.</li>
+          <li><strong>What is kept on your computer</strong>: the lists you needed and the index, in
+            the extension's own IndexedDB database (<code>tcgpartner-card-lists</code>). They are
+            public catalog data, not your data: they are not in backups, and turning Card lists off
+            (or erasing everything in Options) deletes them. Whether you turned Card lists off is
+            stored with your other settings; a backup never changes it.</li>
+          <li><strong>When</strong>: only during an import you start, and only when it has cards the
+            built-in lists do not match; the Import dialog says, above every import, that another
+            game's list is downloaded from TCGPartner when needed. Someone updating from an earlier
+            version sends nothing for Card lists until they import such a list.</li>
+          <li><strong>To turn it off</strong>: Options, Card lists. Nothing is then asked for card
+            lists; cards from games without a shipped list stay unmatched (the import says so), and
+            can be matched later with Find cards.</li>
+        </ul>
+      </section>
+
+      <section>
         <h2>What the developer collects</h2>
         <p>
-          With Daily prices off, nothing: the developer does not collect, receive, transmit, sell,
+          With Daily prices and Card lists off, nothing: the developer does not collect, receive, transmit, sell,
           rent, or share any user data, and the extension never sends your information off your
           device. With <em>Daily prices</em> on (the default from version 0.8.0), TCGPartner's price
           service receives the TCGplayer product numbers of your saved cards (and of a card whose
           TCGPartner menu you open) with your IP address,
           uses them only to answer each request, and keeps neither, apart from the daily lookup
           count under a one-way hash of the IP address described above, deleted the next day.
+          With <em>Card lists</em> on (the default), when an import needs another game's list the
+          service receives that game's number and your IP address, only to send the list (see
+          <em>Card lists</em> above); nothing about your cards is sent.
           Nothing is sold, rented, or shared, and no information is shared with
           <strong>third parties</strong>; Cloudflare runs the service as its host. The one way
           typed text can reach an outside site is a <em>Try Google</em> search that you choose to
@@ -432,7 +483,7 @@
         <p>
           Also stored: your list names, whether each list is a deck or a collection,
           an optional per-list spend budget, and extension settings
-          (junk-term filter, seller preferences, the lowest-price seller guard, price-history retention, the backup reminder, your last export choice, each selling list's asking price as a percentage of market, a vendor list's offer as a percentage of the listed price or of market, theme, dashboard defaults, and the Daily prices settings described above). On a selling list a card can also carry your own asking price for that list.
+          (junk-term filter, seller preferences, the lowest-price seller guard, price-history retention, the backup reminder, your last export choice, each selling list's asking price as a percentage of market, a vendor list's offer as a percentage of the listed price or of market, theme, dashboard defaults, the Daily prices settings described above, and whether Card lists are on). On a selling list a card can also carry your own asking price for that list.
         </p>
         <p>
           <strong>Housekeeping records.</strong> Alongside the above the
@@ -459,6 +510,12 @@
           of shape, no pixels - keyed by the picture's address, in the extension's own IndexedDB
           database (<code>tcgpartner-sealed-outlines</code>). Not in backups; erasing everything in
           Options deletes it.
+        </p>
+        <p>
+          <strong>Card lists.</strong> The card lists downloaded for imports from games whose cards
+          are not built in, and the index of games (see <em>Card lists</em>), in the extension's own
+          IndexedDB database (<code>tcgpartner-card-lists</code>). Public catalog data, not yours;
+          not in backups; turning Card lists off or erasing everything in Options deletes it.
         </p>
         <p>
           The extension does not ask for and does not store your name, email address,
@@ -510,13 +567,15 @@
           default), TCGPartner's own price service receives the TCGplayer product numbers of your saved
           cards (and of a card whose TCGPartner menu you open) with your IP address, only to answer with their prices, and keeps neither, apart from a daily lookup
           count under a one-way hash of the IP address, deleted the next day (described above; no account,
-          list, card names, quantities, conditions, or prices are sent). Beyond that and the card
+          list, card names, quantities, conditions, or prices are sent). With Card lists on (the default),
+          when an import needs another game's list the service receives that game's number, the list's
+          version, and your IP address, only to send the list. Beyond that and the card
           pictures and searches you open, described above, nothing of yours leaves your device. It never uses or transfers it for
           advertising of any kind, including personalised, re-targeted, or
           interest-based advertising, and never uses it to determine creditworthiness or
-          for lending purposes. No human reads your data: with Daily prices off nothing reaches
+          for lending purposes. No human reads your data: with Daily prices and Card lists off nothing reaches
           the developer, and with them on the price service only answers each request
-          automatically: it keeps no product number, and keeps the IP address only as a daily
+          automatically (a card-list request carries only a game's number and a list version): it keeps no product number, and keeps the IP address only as a daily
           one-way hash next to that day's lookup count, deleted the next day.
         </p>
       </section>
@@ -575,6 +634,7 @@
           edit every saved card and list in the dashboard, remove cards individually or
           in bulk, and delete whole lists. To remove everything at once, uninstall the
           extension - Chrome deletes its local storage, and any stored Daily prices, with it.
+          Turning Card lists off deletes the downloaded card lists at once.
           Turning Daily prices off deletes them at once; the price service keeps only
           that day's lookup count under a one-way hash of the IP address, which deletes itself
           the next day (it cannot be looked up by name or account, so there is nothing to request). Options also has
@@ -584,7 +644,8 @@
         <p>
           Retention is yours to set: price-history samples are bounded and pruned
           according to the retention setting on the options page. The developer retains nothing
-          that names you: with Daily prices off nothing is sent, and with them on the price service
+          that names you: with Daily prices and Card lists off nothing is sent; Card lists keep nothing beyond
+          the minute-long rate limit (above); and with Daily prices on the price service
           keeps only the daily lookup count under a one-way hash of the IP address, deleted the
           next day (described above). There is no account to
           close and no deletion request to submit - and equally, no way for the developer
@@ -613,10 +674,10 @@
         <h2>Security</h2>
         <p>
           Your data is protected by Chrome's own extension storage isolation and by the
-          security of your computer and browser profile. With Daily prices off none of your data is
+          security of your computer and browser profile. With Daily prices and Card lists off none of your data is
           transmitted, so there is no data of yours in transit to intercept. With
-          <em>Daily prices</em> on (the default), the requests go over HTTPS, carry no cookie or credential, and
-          only product numbers; the answers are read as data only (never run as code), and a
+          <em>Daily prices</em> or <em>Card lists</em> on (the defaults), the requests go over HTTPS, carry no cookie or credential, and
+          only product numbers (Daily prices) or a game's number and list version (Card lists); the answers are read as data only (never run as code), and a
           redirected request is refused. The price service keeps no account and no record of which
           products anyone asked for, so there is no such database to breach; what it keeps is the
           day's lookup counts under daily one-way hashes of IP addresses, deleted the next day.
@@ -646,7 +707,7 @@
           <h2>International users</h2>
           <p>
           The extension is available wherever the Chrome Web Store is. Wherever
-          you are, the position is the same: with Daily prices off, the developer receives no
+          you are, the position is the same: with Daily prices and Card lists off, the developer receives no
           personal data from you, and nothing personal leaves your device. With
           <em>Daily prices</em> on (the default), TCGPartner's price service (hosted by Cloudflare, Inc.)
           receives with each request your IP address, which the GDPR and the UK GDPR treat
@@ -655,6 +716,12 @@
           used only to answer that request; apart from the daily lookup count kept under a
           one-way hash of the IP address (pseudonymous data, not anonymous) and deleted the
           next day, nothing of it is kept. Turning Daily prices off stops these requests.
+          With <em>Card lists</em> on (the default), the same service receives your IP address and
+          a game's number when an import needs that game's list; they are used only to send it,
+          and nothing of it is kept beyond the minute-long rate limit described above. The
+          purpose is matching the cards of the list you are importing, which you asked for; the
+          basis is the same legitimate interest, the controller and processor are the same, and you
+          can object at any time by turning Card lists off in Options.
           </p>
           <p>
           For that processing, the developer of TCGPartner, Alex Heldt, is the controller, reachable
@@ -681,8 +748,10 @@
           laws: the developer does not sell or share personal information, does
           not use it for targeted advertising or profiling, and holds no personal
           information about you beyond, with Daily prices on, the day's lookup count under
-          a one-way hash of the IP address, which is deleted the next day. Nothing is sold or shared, so there
-          is nothing to opt out of; turning Daily prices off stops the price requests.
+          a one-way hash of the IP address, which is deleted the next day, and, for any request to the
+          price service, a rate-limit count under such a hash that lasts about a minute. Nothing is sold or shared, so there
+          is nothing to opt out of; turning Daily prices off stops the price requests, and turning
+          Card lists off stops the card-list requests.
           </p>
         </section>
 
@@ -691,9 +760,10 @@
         <p>
           TCGPartner is a general-audience tool and is not directed to children under
           13. The developer does not knowingly collect personal information from
-          children under 13. What the Daily prices service sees is used only to
+          children under 13. What the price service sees (for Daily prices and Card lists) is used only to
           answer each request, and all it keeps is the daily lookup count under a one-way
-          hash of the IP address, deleted the next day, as described above.
+          hash of the IP address, deleted the next day, and the minute-long rate-limit count
+          under the same kind of hash, as described above.
         </p>
       </section>
 
@@ -770,6 +840,15 @@
           of Pok&eacute;mon names built into the extension (from PokeAPI); nothing is looked up
           online. Upload and paste read a list the same way, and anything that can't be read or
           matched is shown before saving.
+        </p>
+        <p>
+          0.8.0, 25 November 2026 (later the same day): <em>Card lists</em>. A pasted or imported
+          list from any card game TCGplayer sells is matched; the list of a game whose cards are not
+          built into the extension is downloaded from TCGPartner's price service when an import
+          needs it, sending the game's number and the list's version (with, as every request does,
+          your IP address; see <em>Card lists</em>). Nothing is sent before you import such a list,
+          and the Import dialog says so above every import. On by default; Options turns it off and
+          deletes the downloaded lists.
         </p>
       </section>
 
