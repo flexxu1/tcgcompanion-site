@@ -119,7 +119,7 @@
           <strong>Effective date:</strong> 25 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 25 November 2026 (UTC; version 0.8.0).
+          Last verified against the extension source on 26 November 2026 (UTC; version 0.8.0).
         </p>
       </header>
 
@@ -288,10 +288,12 @@
           number, printing, condition, language, price (marked when it is an estimate),
           TCGplayer product id and SKU id, and, only when a card has one, your asking price, a
           seller's price and an offer from an imported list, your note, whether you collected it
-          (not on a selling list), and, for all your cards or Likes, the lists it is in, then a
+          (not on a selling list), and, for all your cards or Likes, the lists it is in, the price's
+          change in percent over 7 and 30 days (<em>7d %</em> and <em>30d %</em>, once the price
+          history has one), then a
           link to the card's TCGplayer product page (blank for a card not matched to one). The text
           file has one line per card (quantity, name, set and number, condition and printing,
-          price, and your asking price), each followed by the same link on its own line (or a line
+          price, your asking price, and the 7- and 30-day change when there is one), each followed by the same link on its own line (or a line
           saying the card has none), under one line naming the list, and a last line saying the
           product uses TCGplayer data but is not endorsed by TCGplayer (it names TCGplayer as the
           source of the prices only when every price in the file was read on a TCGplayer page). It
@@ -398,6 +400,13 @@
             change), always labelled, never added into a total, and marked as an estimate in
             exported price lists. A price read on the card's
             own page replaces an estimate, and replaces a daily price when it is newer.</li>
+          <li><strong>Price trends</strong>: after each daily update, TCGPartner's price service keeps a
+            snapshot of that day's market prices (prices only: no user, no IP address, no list of who
+            asked for what), and from these it works out each card's price change over 7 and 30 days
+            (snapshots are kept for up to 400 days).
+            The change arrives with the prices the extension already asks for: nothing more is sent, and
+            nothing new about you is collected or stored. A card shows a change only once the service
+            has a real price from that many days before; until then it shows none.</li>
           <li>Daily prices are part of the free extension and are not behind any paid tier.</li>
         </ul>
       </section>
@@ -497,7 +506,7 @@
         <p>
           Also stored: your list names, whether each list is a deck or a collection,
           an optional per-list spend budget, and extension settings
-          (junk-term filter, seller preferences, the lowest-price seller guard, price-history retention, the backup reminder, your last export choice, each selling list's asking price as a percentage of market, a vendor list's offer as a percentage of the listed price or of market, theme, dashboard defaults, the Daily prices settings described above, and whether Card lists are on). On a selling list a card can also carry your own asking price for that list.
+          (junk-term filter, seller preferences, the lowest-price seller guard, price-history retention, the backup reminder, your last export choice, each selling list's asking price as a percentage of market, a vendor list's offer as a percentage of the listed price or of market, theme, dashboard defaults, the Daily prices settings described above, whether Card lists are on, and whether card tiles show the 7-day or the 30-day price trend). On a selling list a card can also carry your own asking price for that list.
         </p>
         <p>
           <strong>Housekeeping records.</strong> Alongside the above the
@@ -694,7 +703,9 @@
           only product numbers (Daily prices) or a game's number and list version (Card lists); the answers are read as data only (never run as code), and a
           redirected request is refused. The price service keeps no account and no record of which
           products anyone asked for, so there is no such database to breach; what it keeps is the
-          day's lookup counts under daily one-way hashes of IP addresses, deleted the next day.
+          day's lookup counts under daily one-way hashes of IP addresses, deleted the next day, and
+          a daily snapshot of market prices for the price trends (prices only, nothing about any
+          person), kept for up to 400 days.
         </p>
         <p>
           Two honest limits: anyone with access to your unlocked computer and browser
@@ -881,6 +892,13 @@
           in the text file. The link holds only the product id, condition, printing, and language
           already in the file; a card not matched to a TCGplayer product gets none. Nothing is sent
           when you export.
+        </p>
+        <p>
+          0.8.0, 25 November 2026 (price trends): the price service keeps a daily snapshot of market
+          prices (no user data) and sends each card's 7-day and 30-day price change with the daily
+          prices; the dashboard shows it beside the price, exported price lists include it, and Options
+          has a <em>Price trend</em> choice (7 or 30 days), stored with your other settings. Nothing new
+          is sent from your computer.
         </p>
       </section>
 
