@@ -119,7 +119,7 @@
           <strong>Effective date:</strong> 25 November 2026 · Applies to TCGPartner
           (formerly TCGCompanion) version 0.2.1 and later (first published 19 August 2026 for 0.1.0; the cart
           helper described in earlier versions was removed in 0.2.1).
-          Last verified against the extension source on 26 November 2026 (UTC; version 0.8.0).
+          Last verified against the extension source on 28 November 2026 (UTC; version 0.8.0).
         </p>
       </header>
 
@@ -155,15 +155,15 @@
         <p>
           Deck import works from what you type. When you paste a card list into <em>Import</em>, the
           card names, copies, printing numbers, and set codes you pasted (and a condition typed
-          after a card; a typed price goes in its note) are saved exactly
+          after a card; a typed price is kept as that list's own price for the card) are saved exactly
           as typed, into a deck on your machine; nothing is looked up anywhere. Cards
           added this way store three extra fields: where the record came from
           (<code>importedFrom</code>), the printing number you typed
           (<code>importNumber</code>, with the set total after a slash when you typed one,
           such as &ldquo;010/086&rdquo;), and the set code you typed
           (<code>importSetHint</code>), each only when present. A condition and a price typed after a
-          card (&ldquo;LP $2.50&rdquo;) are kept as that card's condition and, for the price, in its
-          note (&ldquo;Price on imported list: ...&rdquo;), the way a list file's price is. These are identity only -
+          card (&ldquo;LP $2.50&rdquo;) are kept as that card's condition and, for the price, as that
+          list's own price for the card (<code>listedPrices</code>), the way a list file's price is. These are identity only -
           an imported card carries no price and no picture until you open its TCGplayer
           page yourself, exactly like any other unpriced card. To tell which imported card
           a product page is, the extension reads that page's own card number (its
@@ -222,8 +222,9 @@
           export's &ldquo;SKU&rdquo;), that number is kept as <code>importSkuId</code> so the
           card's price list can list it again; it is dropped if you change the card's
           condition, printing, or language. A price in the file is not
-          stored as the card's price; it is added to the card's note (&ldquo;Price on imported
-          list: ...&rdquo;), as is a printing the extension does not track, and a language that
+          stored as the card's price; it is kept as that list's own price for the card
+          (<code>listedPrices</code>), never in the card's note. A printing the extension does not
+          track is added to the card's note, as is a language that
           would otherwise relabel a card you already saved (&ldquo;Language on imported list:
           ...&rdquo;), and the grade of a graded slab such as &ldquo;PSA 10&rdquo; (&ldquo;Grade on imported list: ...&rdquo;). The one exception is
           a TCGplayer Seller Portal pricing export: its <code>TCG Market Price</code> column is
@@ -233,8 +234,10 @@
           <code>import</code> and dated when the file was exported (from its file name, or else
           the file's own modified time). A file or pasted text with no such date never
           replaces a price read on TCGplayer; it only prices cards that have none. Importing such
-          a file updates the prices of cards you already saved that it matches. Cost columns (what
-          someone paid) are not read. Nothing is looked up anywhere.
+          a file updates the prices of cards you already saved that it matches. A spreadsheet
+          TCGPartner exported holds TCGplayer's price at the time of the export in its Price column;
+          imported again, that price is given only to a card that has no price at all, the same way.
+          Cost columns (what someone paid) are not read. Nothing is looked up anywhere.
         </p>
         <p>
           <strong>Reading a photo or screenshot.</strong> Photos are read on this computer and
@@ -397,7 +400,7 @@
             price</em>. This product uses TCGplayer data but is not endorsed or certified by
             TCGplayer. Where TCGplayer has no market price for a card's own condition, TCGPartner can
             show an <strong>Estimate</strong> (the Near Mint price times a percentage you can
-            change), always labelled, never added into a total, and marked as an estimate in
+            change), always labelled (a total that includes one is shown with &ldquo;&asymp;&rdquo;), and marked as an estimate in
             exported price lists. A price read on the card's
             own page replaces an estimate, and replaces a daily price when it is newer.</li>
           <li><strong>Price trends</strong>: after each daily update, TCGPartner's price service keeps a
@@ -899,6 +902,13 @@
           prices; the dashboard shows it beside the price, exported price lists include it, and Options
           has a <em>Price trend</em> choice (7 or 30 days), stored with your other settings. Nothing new
           is sent from your computer.
+        </p>
+        <p>
+          0.8.0, 28 November 2026: a price in an imported file or typed after a card is kept as that
+          list's own price for the card (<code>listedPrices</code>), no longer written into the card's
+          note; price lines older versions wrote into notes are moved there on this computer. A
+          sideboard note names its list, and a total that includes an estimate counts it and is
+          shown with &ldquo;&asymp;&rdquo;. Nothing new is sent or stored.
         </p>
       </section>
 
